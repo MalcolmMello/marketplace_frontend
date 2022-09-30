@@ -13,10 +13,10 @@ export const Navbar = () => {
                         Home
                     </li>
                     <li>
-                        Pedidos
+                        Seus Produtos
                     </li>
                     <li>
-                        Seus Produtos
+                        Pedidos
                     </li>
                 </ul>
             </nav>
