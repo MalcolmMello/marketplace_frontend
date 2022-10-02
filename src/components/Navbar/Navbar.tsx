@@ -1,5 +1,6 @@
 import * as C from './styles';
 import logo from '../../assets/assinatura_completa.svg'
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
     return (
@@ -10,13 +11,16 @@ export const Navbar = () => {
             <nav className='navegation'>
                 <ul>
                     <li>
-                        Home
+                        <Link to="/">Home</Link>
                     </li>
                     <li>
-                        Seus Produtos
+                        <Link to="produtos">Seus Produtos</Link>
                     </li>
                     <li>
-                        Pedidos
+                        <Link to="pedidos">Pedidos</Link>
+                    </li>
+                    <li>
+                        <Link to="perfil">Perfil</Link>
                     </li>
                 </ul>
             </nav>

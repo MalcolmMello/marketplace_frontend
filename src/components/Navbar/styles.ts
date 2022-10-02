@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Navbar = styled.header`
     background-color: #FF175B;
     width: 15vw;
-    height: 100vh;
+    min-height: 100vh;
     .logo--area {
         display: flex;
         height: 60px;
@@ -31,6 +31,12 @@ export const Navbar = styled.header`
                 transition: all ease 0.3s;
                 color: #fff;
                 cursor: pointer;
+                a {
+                    text-decoration: none;
+                    color: #FFF;
+                    width: 100%;
+                    height: 100%
+                }
             }
             li:hover {
                 border-left: 4px solid #fff;
