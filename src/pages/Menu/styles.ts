@@ -6,17 +6,27 @@ export const Menu = styled.main`
     background-color: rgb(244,244,244)
 `;
 
-export const AddCategoryArea = styled.section`
-    button {
-        min-width: 200px;
-        padding: 15px;
-        border: none;
-        border-radius: 15px;
-        background-color: #FF175B;
-        color: #fff;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 14px
+export const NestedMenu = styled.section`
+    ul {
+        list-style: none;
+        display: flex;
+        padding: 10px 5px 0px 10px;
+        height: 55px;
+        border-bottom: 1px solid #FF175B;
+        li {
+            margin-right: 20px;
+            border-bottom: 3px solid transparent;
+            transition: all ease 0.2s;
+            cursor: pointer;
+            height: 100%;
+            a {
+                color: #000;
+                text-decoration: none
+            }
+        };
+        li:hover {
+            border-bottom: 3px solid #FF175B
+        }
     }
 `;
 
@@ -27,11 +37,14 @@ export const CategoryArea = styled.section`
 `;
 
 export const NameCategory = styled.div`
-    background-color: #FF175B;
-    color: #FFF;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
-    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    color: #000;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 80px;
+    border-bottom: 1px solid #949494;
     padding: 5px 10px 5px 10px;
     font-weight: bold;
     font-size: 22px
@@ -40,8 +53,8 @@ export const NameCategory = styled.div`
 export const ProductArea = styled.div`
     min-height: 300px;
     background: white;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     position: relative;
     padding: 5px 10px 5px 10px;
     .add--item {

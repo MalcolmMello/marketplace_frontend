@@ -1,22 +1,27 @@
 import * as C from './styles'
+import { Link, Outlet } from 'react-router-dom';
 
 export const Menu = () => {
     return (
         <C.Menu>
-            <C.AddCategoryArea>
-                <button>Adicionar Categoria</button>
-            </C.AddCategoryArea>
-            <C.CategoryArea>
-                <C.NameCategory>
-                    Ração
-                </C.NameCategory>
-                <C.ProductArea>
-                    <div></div>
-                    <div className='add--item'>
-                        <h2>+</h2> Adicionar Item
-                    </div>
-                </C.ProductArea>
-            </C.CategoryArea>
+            <C.NestedMenu>
+                <ul>
+                    <li>
+                        <Link to="">Menu</Link>
+                    </li>
+                    <li>
+                        <Link to="category">
+                            Categorias
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="item">
+                            Produtos
+                        </Link>
+                    </li>
+                </ul>
+            </C.NestedMenu>
+            <Outlet />
         </C.Menu>   
     );
 };
