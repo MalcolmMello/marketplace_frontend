@@ -1,7 +1,12 @@
-import { Link } from 'react-router-dom';
 import * as C from './styles'
+import { Link } from 'react-router-dom';
+import { fetchCategories } from '../../../../redux/sliceCategories';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
 
 export const ViewCategory = () => {
+    const { categories, loading } = useAppSelector((state) => state.categories);
+
     return (
         <C.ViewCategory>
             <section className='top--area'>
@@ -11,6 +16,7 @@ export const ViewCategory = () => {
                 </Link>
             </section>
             <section className='category--area'>
+
                 <div className='category--menu'>
                     <ul>
                         <li>Nome</li>
@@ -18,10 +24,14 @@ export const ViewCategory = () => {
                     </ul>
                 </div>
                 <div className='category--items'>
-                    <ul>
-                        <li>Ração</li>
-                        <li>0</li>
-                    </ul>
+                    { loading ? (
+                        <div>carregando...</div>
+                    ) : (categories && categories.map((item) => (
+                        <ul key={item.id}>
+                            <li>{item.category_name}</li>
+                            <li>{item.products.length}</li>
+                        </ul>
+                    )))}
                 </div>
             </section>
         </C.ViewCategory>

@@ -1,4 +1,4 @@
-import * as C from './styles'
+import * as C from './styles';
 
 export const ViewMenu = () => {
     return (

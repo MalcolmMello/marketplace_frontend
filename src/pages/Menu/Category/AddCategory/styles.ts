@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const AddCategory = styled.section`
+export const AddCategory = styled.form`
     display: flex;
     justify-content: space-between;    
     padding: 0px 5px;
