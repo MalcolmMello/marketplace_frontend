@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
 
 export const ViewCategory = () => {
-    const { categories, loading } = useAppSelector((state) => state.categories);
-
+    const { categories, loading, error } = useAppSelector((state) => state.categories);
+    
     return (
         <C.ViewCategory>
             <section className='top--area'>
@@ -26,10 +26,10 @@ export const ViewCategory = () => {
                 <div className='category--items'>
                     { loading ? (
                         <div>carregando...</div>
-                    ) : (categories && categories.map((item) => (
+                    ) : (categories && categories !== null && categories.map((item) => (
                         <ul key={item.id}>
                             <li>{item.category_name}</li>
-                            <li>{item.products.length}</li>
+                            <li>{item.products !== null ? item.products.length : 0}</li>
                         </ul>
                     )))}
                 </div>

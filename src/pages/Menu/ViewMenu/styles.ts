@@ -26,4 +26,26 @@ export const ProductArea = styled.div`
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     padding: 5px 10px 5px 10px;
+    margin-bottom: 15px;
+
+    .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 15px 0px;
+        img {
+            height: 60px;
+            width: 60px
+        };
+        .info {
+            width: 80%;
+            margin: px 5px;
+            h4 {
+                margin: 0;
+            }
+        }
+        .price {
+
+        }
+    }
 `;
