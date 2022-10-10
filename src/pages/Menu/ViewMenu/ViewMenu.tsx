@@ -3,6 +3,7 @@ import * as C from './styles';
 
 export const ViewMenu = () => {
     const { categories, loading } = useAppSelector((state) => state.categories);
+    
     return (
             <C.CategoryArea>
                 {loading ? (
@@ -10,7 +11,9 @@ export const ViewMenu = () => {
                 ) : (categories.map((item) => (
                         <>
                             <C.NameCategory>
-                                {item.category_name}
+                                <div>
+                                    {item.category_name}
+                                </div>
                             </C.NameCategory>
                             <C.ProductArea>
                                 {item.products?.map((product) => (
@@ -26,7 +29,6 @@ export const ViewMenu = () => {
                                     </div>
                                 ))}
                             </C.ProductArea>
-                            
                         </>
                     )))}
             </C.CategoryArea>

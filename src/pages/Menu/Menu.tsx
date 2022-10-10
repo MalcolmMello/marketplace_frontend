@@ -4,8 +4,19 @@ import { Link, Outlet } from 'react-router-dom';
 export const Menu = () => {
     return (
         <C.Menu>
+            <section className='title'>
+                <div>
+                    <h1>Seus Produtos</h1>
+                    <p>Gerencie o que está a venda</p>
+                </div>
+                <div>
+                    <button>
+                        Ver página da loja
+                    </button>
+                </div>
+            </section>
             <C.NestedMenu>
-                <ul>
+                <ul className='menu'>
                     <li>
                         <Link to="">Menu</Link>
                     </li>
@@ -20,8 +31,8 @@ export const Menu = () => {
                         </Link>
                     </li>
                 </ul>
+                <Outlet />
             </C.NestedMenu>
-            <Outlet />
         </C.Menu>   
     );
 };

@@ -1,24 +1,33 @@
 import styled from "styled-components";
 
 export const ViewCategory = styled.div`
+    background-color: #FFF;
+    border-radius: 15px;
+    color: #660C27;
+    .container {
+        box-shadow: 0px 3px 40px rgb(227,227,227);
+        font-weight: bold;
+    }
     .top--area {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        padding: 15px 15px;
         h1 {
             margin: 0
         };
         button {
             height: 47px;
-            background-color: #FF175B;
+            background-color: #660C27;
             border: none;
             border-radius: 12px;
             color: #FFF;
             padding: 10px;
             font-weight: bold;
             cursor: pointer
-        }
+        };
     }
-    .category--area ul {
+    ul {
         display: flex;
         justify-content: space-between;
         padding: 10px 15px;
@@ -28,7 +37,9 @@ export const ViewCategory = styled.div`
         }
     }
     .category--menu ul {
-        border-bottom: 1px solid #000;
-        padding-bottom: 15px
+        padding: 15px 30px
+    }
+    .category--items {
+        padding: 15px 15px;
     }
 `

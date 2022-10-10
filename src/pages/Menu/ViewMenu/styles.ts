@@ -1,23 +1,28 @@
 import styled from "styled-components";
 
 export const CategoryArea = styled.section`
-    margin-top: 40px;
     border-radius: 15px;
     box-shadow: 0px 0px 30px rgb(227,227,227);
+    color: #660C27;
 `;
 
 export const NameCategory = styled.div`
     display: flex;
-    align-items: center;
     background-color: #fff;
-    color: #000;
+    color: #660C27;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     height: 80px;
-    border-bottom: 1px solid #949494;
-    padding: 5px 10px 5px 10px;
     font-weight: bold;
-    font-size: 22px
+    font-size: 22px;
+    div {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        box-shadow: 0px 3px 40px rgb(227,227,227);
+        padding: 5px 10px 5px 10px;
+    }
 `;
 
 export const ProductArea = styled.div`
@@ -35,7 +40,7 @@ export const ProductArea = styled.div`
         margin: 15px 0px;
         img {
             height: 60px;
-            width: 60px
+            width: 60px;
         };
         .info {
             width: 80%;
@@ -45,7 +50,7 @@ export const ProductArea = styled.div`
             }
         }
         .price {
-
+            
         }
     }
 `;

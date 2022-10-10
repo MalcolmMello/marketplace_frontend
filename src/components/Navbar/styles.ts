@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Navbar = styled.header`
-    background-color: #FF175B;
+    background-color: #A1818A;
     width: 15vw;
     min-height: 100vh;
     .logo--area {
@@ -40,6 +40,7 @@ export const Navbar = styled.header`
             }
             li:hover {
                 border-left: 4px solid #fff;
+                font-weight: bold;
             }
         }
     }
