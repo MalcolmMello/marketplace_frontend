@@ -1,18 +1,18 @@
 import * as C from './styles';
 import React, { useState } from 'react';
 import { cleanError, postCategory } from '../../../../redux/sliceCategories';
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { useAppDispatch } from '../../../../hooks';
 
 export const AddCategory = () => {
     const dispatch = useAppDispatch();
     const [category, setCategory] = useState('');
-    const { categories, loading } = useAppSelector((state) => state.categories);
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
             const result = await dispatch(postCategory(category)).unwrap();
+            cleanForm();
         } catch (error) {
             alert(`${error}`)
             cleanForm();

@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
 import { useAppSelector } from '../../../hooks';
 import * as C from './styles';
 
 export const ViewMenu = () => {
     const { categories, loading } = useAppSelector((state) => state.categories);
-    
+    useEffect(() => {console.log(categories)}, [categories])
     return (
             <C.CategoryArea>
                 {loading ? (

@@ -1,12 +1,24 @@
 import styled from "styled-components";
 
-export const AddItem = styled.section`
+export const AddItem = styled.form`
     padding: 0px 5px;
     #test {
         display: none;
     }
     .input--area {
-        margin-bottom: 40px
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+        button {
+            width: 198px;
+            height: 49px;
+            background-color: #660C27;
+            border: none;
+            border-radius: 10px;
+            color: #FFF;
+            font-weight: bold;
+            font-size: 15px
+        }
     }
     label {
         display: block;
@@ -14,6 +26,11 @@ export const AddItem = styled.section`
         width: 180px;
         margin-bottom: 20px
     }
+    .preview--img {
+        height: 180px;
+        width: 180px;
+        border-radius: 15px;
+    };
     .img--container {
         display: flex;
         align-items: center;

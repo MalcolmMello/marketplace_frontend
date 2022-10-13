@@ -26,7 +26,6 @@ export const NameCategory = styled.div`
 `;
 
 export const ProductArea = styled.div`
-    min-height: 300px;
     background: white;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
