@@ -16,11 +16,13 @@ export const MenuRoutes = () => {
             { path: '', element: <ViewMenu />},
             { path: 'category', element: <Category />, children: [
                 { path: '', element: <ViewCategory /> },
-                { path: 'add', element: <AddCategory /> }
+                { path: 'add', element: <AddCategory /> },
+                { path: 'add/:id', element: <AddCategory /> }
             ] },
             { path: 'item', element: <Item />, children: [
                 { path: '', element: <ViewItem />},
-                { path: 'add', element: <AddItem /> }
+                { path: 'add', element: <AddItem /> },
+                { path: 'add/:id', element: <AddItem /> }
             ] }
         ]}
     ]);

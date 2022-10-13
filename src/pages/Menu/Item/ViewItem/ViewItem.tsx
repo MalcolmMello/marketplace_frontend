@@ -1,12 +1,16 @@
 import * as C from './styles';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../../hooks';
+import { useState } from 'react';
 
 export const ViewItem = () => {
     const { categories, loading, error } = useAppSelector((state) => state.categories);
-    
+    const [isOptionOpen, setIsOptionOpen] = useState(false);
+
+    const openOptionsMenu = () => setIsOptionOpen(!isOptionOpen);
+
     return (
-        <C.ViewItem>
+        <C.ViewItem options={isOptionOpen}>
             <div className='container'>
                 <div className='top--area'>
                     <h1>Produtos Cadastrados</h1>
@@ -22,6 +26,7 @@ export const ViewItem = () => {
                             <li>Estoque</li>
                             <li>Status</li>
                             <li>Preço</li>
+                            <li className='options'></li>
                         </ul>
                     </div>
                 </div>
@@ -30,10 +35,21 @@ export const ViewItem = () => {
                 {categories.map(item => item.products?.map(product => (
                     <ul>
                         <li>{item.category_name}</li>
-                        <li className='name'> <img src={product.front_cover} alt="" /> {product.product_name}</li>
+                        <li className='name'> <img src={`http://localhost:5000/media/${product.front_cover}.jpg`} alt="" /> {product.product_name}</li>
                         <li className='lenght'>0 <br /><span>Unidades</span></li>
                         <li>Ativo</li>
-                        <li>R$ {product.price}</li>
+                        <li>R$ {product.price?.toFixed(2).replace('.', ',')}</li>
+                        <li className='options'>
+                            <div className='choose-option'>
+                                <Link to={`add/${product.id}`}>Editar Item</Link>
+                                <Link to="">Excluir Item</Link>
+                            </div>
+                            <div className='options--item' onClick={openOptionsMenu}>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </li>
                     </ul>
                 )))}
             </div>

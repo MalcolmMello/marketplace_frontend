@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
 import { useAppSelector } from '../../../hooks';
 import * as C from './styles';
 
 export const ViewMenu = () => {
     const { categories, loading } = useAppSelector((state) => state.categories);
-    useEffect(() => {console.log(categories)}, [categories])
+
     return (
             <C.CategoryArea>
                 {loading ? (
@@ -19,7 +18,7 @@ export const ViewMenu = () => {
                             <C.ProductArea>
                                 {item.products?.map((product) => (
                                     <div className='item'>
-                                        <img src={product.front_cover} alt="" />
+                                        <img src={`http://localhost:5000/media/${product.front_cover}.jpg`} alt="" />
                                         <div className='info'>
                                             <h4>{product.product_name}</h4>
                                             <small>{product.description}</small>

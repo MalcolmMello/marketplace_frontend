@@ -1,18 +1,40 @@
 import * as C from './styles'
 import { useAppSelector, useAppDispatch } from '../../../../hooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postProduct } from '../../../../redux/sliceCategories';
+import { editProduct, postProduct } from '../../../../redux/sliceCategories';
+import { useParams } from 'react-router-dom';
 
 export const AddItem = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { id } = useParams();
     const { categories, loading } = useAppSelector((state) => state.categories);
     
     const fileField = useRef<HTMLInputElement>(null);
     
     const [postData, setPostData] = useState({ product_name: '', description: '', categoryProductId: '', price: '' });
     const [img, setImg] = useState<File>();
+
+    const [existImg, setExistImg] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
+        if(id) {
+            categories.forEach(item => item.products.forEach(product => {
+                if(product.id === id) {
+                    if(product.front_cover) {
+                        setExistImg(`http://localhost:5000/media/${product.front_cover}.jpg`);
+                    }
+                    if(product.description && product.categoryProductId && product.price) {
+                        setPostData({ product_name: product.product_name, description: product.description, categoryProductId: product.categoryProductId, price: String(product.price) })
+                    } else {
+                        setPostData({...postData, product_name: product.product_name});
+                    }
+                    
+                }
+            }));
+        }
+    }, [id]);
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -23,21 +45,29 @@ export const AddItem = () => {
         formData.append('categoryProductId', postData.categoryProductId);
         formData.append('price', postData.price);
 
-        console.log(postData.categoryProductId)
         const files = fileField.current?.files;
 
         if(files) {
             formData.append('front_cover', files[0]);
         };
 
-        const result = await dispatch(postProduct(formData)).unwrap();
-        
-        if(result instanceof Error) {
-            alert(`${result.message}`); 
-        };
-
-        navigate('/produtos');
-        setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+        if(id) {
+            try {
+                const result = await dispatch(editProduct({ formData, id })).unwrap();
+                navigate('/produtos');
+                setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+            } catch (error) {
+                alert(`${error}`);
+            }
+        } else {
+            try {
+                const result = await dispatch(postProduct(formData)).unwrap();
+                navigate('/produtos');
+                setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+            } catch (error) {
+                alert(`${error}`);
+            }
+        }   
     };
 
     return (
@@ -53,7 +83,7 @@ export const AddItem = () => {
                 <button type='submit'>Adicionar Produto</button>
             </div>
             <label htmlFor="test"> 
-                {img !== undefined ? <img src={URL.createObjectURL(img)} className="preview--img"/> : (
+                {img !== undefined || existImg ? <img src={img != undefined ? URL.createObjectURL(img) : existImg} className="preview--img"/> : (
                     <div className='img--container'>
                         Escolha uma imagem
                     </div>
@@ -67,7 +97,7 @@ export const AddItem = () => {
             </label>
             <div className='textarea'>
                 <p>Descrição (Opcional)</p>
-                <textarea onChange={e => setPostData({...postData, description: e.target.value })} placeholder='Insira a uma Descrição'></textarea>
+                <textarea value={postData.description} onChange={e => setPostData({...postData, description: e.target.value })} placeholder='Insira a uma Descrição'></textarea>
             </div>
             <div className='category--area'>
                 <select name="" id="" className='category' value={postData.categoryProductId} onChange={e => setPostData({...postData, categoryProductId: e.target.value })}>
@@ -79,7 +109,7 @@ export const AddItem = () => {
             </div>
             <div className='price--area'>
                 <p>Preço</p>
-                <input type="number" step="any" placeholder='R$' className='price' onChange={e => setPostData({...postData, price: e.target.value })}/>
+                <input type="number" step="any" placeholder='R$' className='price' value={postData.price} onChange={e => setPostData({...postData, price: e.target.value })}/>
             </div>
         </C.AddItem>
     );

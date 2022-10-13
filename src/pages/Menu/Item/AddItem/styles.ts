@@ -17,7 +17,8 @@ export const AddItem = styled.form`
             border-radius: 10px;
             color: #FFF;
             font-weight: bold;
-            font-size: 15px
+            font-size: 15px;
+            cursor: pointer
         }
     }
     label {
@@ -30,6 +31,7 @@ export const AddItem = styled.form`
         height: 180px;
         width: 180px;
         border-radius: 15px;
+        cursor: pointer;
     };
     .img--container {
         display: flex;
