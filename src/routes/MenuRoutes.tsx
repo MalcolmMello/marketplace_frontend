@@ -8,6 +8,9 @@ import { ViewCategory } from '../pages/Menu/Category/ViewCategory/ViewCategory';
 import { AddCategory } from '../pages/Menu/Category/AddCategory/AddCategory';
 import { ViewItem } from '../pages/Menu/Item/ViewItem/ViewItem';
 import { AddItem } from '../pages/Menu/Item/AddItem/AddItem';
+import { Requests } from '../pages/Requests/Requests';
+import { ViewRequest } from '../pages/Requests/ViewRequest/ViewRequest';
+
 
 export const MenuRoutes = () => {
     return useRoutes([
@@ -24,6 +27,9 @@ export const MenuRoutes = () => {
                 { path: 'add', element: <AddItem /> },
                 { path: 'add/:id', element: <AddItem /> }
             ] }
-        ]}
+        ]},
+        { path: '/pedidos', element: <Requests />, children: [
+            { path: 'view/:id', element: <ViewRequest /> }
+        ] }
     ]);
 };
