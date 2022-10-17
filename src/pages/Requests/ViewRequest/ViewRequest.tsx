@@ -15,7 +15,7 @@ export const ViewRequest = () => {
                         <RequestItem 
                             id={item.request_id}
                             username={item.username}
-                            status={item.status}
+                            status={item.status.status_name}
                             total={item.total}
                             created_at={item.created_at}
                             address={item.address}

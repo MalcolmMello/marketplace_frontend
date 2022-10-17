@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { EM_ABERTO } from '../../../constants/status';
 import * as C from './styles';
 
 interface OpenRequest {
@@ -18,7 +19,7 @@ export const OpenRequests = ({ id, status }: OpenRequest) => {
                         {status}
                     </div>
                 </div>
-                {status === 'Pendente' ? <h4>Confirme o Pedido</h4> : ''}
+                {status === EM_ABERTO ? <h4>Confirme o Pedido</h4> : ''}
             </Link>
         </C.OpenRequest>
     )

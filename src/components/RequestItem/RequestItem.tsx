@@ -1,4 +1,7 @@
 import * as C from './styles';
+import { EM_ABERTO, EM_PREPARO } from '../../constants/status';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeRequestStatus } from '../../redux/sliceRequests';
 
 interface RequestItem {
     id: string,
@@ -26,12 +29,26 @@ interface RequestItem {
 };
 
 export const RequestItem = ({ id, username, status, total, created_at, address, products }: RequestItem) => {
+    const dispatch = useAppDispatch();
+    
     const date = `às ${new Date(created_at).getHours()}:${new Date(created_at).getMinutes()}`;
     
+    const handleCalcelRequest = () => {
+
+    };
+
+    const handleConfirmRequest = async () => {
+        try {
+            const result = await dispatch(changeRequestStatus({ status_name: EM_PREPARO, id })).unwrap();
+        } catch (error) {
+            alert(`${error}`);
+        }
+    };
+
     return (
         <C.RequestItem>
             <div className='top--area'>
-                {status !== "Pendente" ? username : null} Pedido #{id.substring(0,8)} - Feito {date}
+                {status !== EM_ABERTO ? username : null} Pedido #{id.substring(0,8)} - Feito {date}
             </div>
             <div className='address'>
                {address.street}, {address.number}, {address.city} - {address.district} - {address.state} - CEP {address.zip_code}
@@ -51,6 +68,14 @@ export const RequestItem = ({ id, username, status, total, created_at, address, 
                     <div className='title'>Total</div>
                     <div>R$ {total.toFixed(2).replace('.', ',')}</div>
                 </div>
+            </div>
+            <div className='bottom--area'>
+                {status === EM_ABERTO && 
+                    <div className='button--area'>
+                        <button className='cancel' onClick={handleCalcelRequest}>Cancelar</button>
+                        <button className='confirm' onClick={handleConfirmRequest}>Confirmar Pedido</button>
+                    </div>
+                }
             </div>
         </C.RequestItem>      
     )

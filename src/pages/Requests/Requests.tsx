@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getRequests } from '../../redux/sliceRequests';
 import { OpenRequests } from '../../components/Navbar/OpenRequests/OpenRequests';
 import { Outlet } from 'react-router-dom';
+import { EM_ABERTO } from '../../constants/status';
 
 export const Requests = () => {
     const { requests, loading, error } = useAppSelector((state) => state.requests);
@@ -18,11 +19,11 @@ export const Requests = () => {
         <C.Requests>
             <section className='open--requests'>
                 {requests.map(item => {
-                    if(item.status === "Pendente") {
+                    if(item.status.status_name === EM_ABERTO) {
                         return (
                             <OpenRequests
                                 id={item.request_id}
-                                status={item.status}
+                                status={item.status.status_name}
                             />
                         )
                     }

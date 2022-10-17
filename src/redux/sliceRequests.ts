@@ -4,12 +4,14 @@ import axios from 'axios';
 const baseURL = 'http://localhost:5000/companies';
 
 const headers = { 
-    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY1ODYyOTc1LCJleHAiOjE2NjU4NjY1NzV9.Ia2nHQgjygj-0ci1H2hnPw66ZuB6UR8bQeu2sk9juRw',
+    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY1OTYzNzk0LCJleHAiOjE2NjU5NjczOTR9.OZqMskqOzCe1Z5tH9lt7CuaLn3yECNq_RZ7Uw8APAHg',
 };
 type Request = {
     request_id: string,
     username: string,
-    status: string,
+    status: {
+        status_name: string
+    },
     total: number,
     created_at: string,
     products: {
@@ -30,6 +32,19 @@ type Request = {
         number: string
     }
 }
+
+interface ChangeStatus {
+    status_name: string,
+    id: string
+};
+
+interface ChangedRequest {
+    requestId: string,
+    status: {
+        status_name: string
+    },
+};
+
 interface State {
     requests: Request[],
     loading: boolean,
@@ -55,6 +70,24 @@ export const getRequests = createAsyncThunk('getrequest/companies', async (arg, 
         return thunkAPI.rejectWithValue(error.response.data.message);
     }
 });
+
+export const changeRequestStatus = createAsyncThunk('changestatus/companies',async ({status_name, id}: ChangeStatus, thunkAPI) => {
+    try {
+        const body = {
+            status_name
+        };
+        const response = await axios.put(`${baseURL}/changerequeststatus/${id}`, body, { headers } );
+        if(response.status !== 200) {
+            return new Error();
+        } else {
+            let { data } = response;
+            return data;
+        }
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue(error.response.data.message);
+    }    
+});
+
 /* reducers */
 const sliceRequests = createSlice({
     name: 'requests',
@@ -74,6 +107,22 @@ const sliceRequests = createSlice({
                 state.requests = action.payload;
             })
             .addCase(getRequests.rejected, (state, action: PayloadAction<any>) => {
+                state.error = action.payload.message;
+                state.loading = false;
+            })
+            .addCase(changeRequestStatus.pending, (state, action) => {
+                state.error = null;
+                state.loading = true;
+            })
+            .addCase(changeRequestStatus.fulfilled, (state, action: PayloadAction<ChangedRequest>) => {
+                state.loading = false;
+                state.requests.map(item => {
+                    if(item.request_id === action.payload.requestId) {
+                        item.status.status_name = action.payload.status.status_name;
+                    }
+                })
+            })
+            .addCase(changeRequestStatus.rejected, (state, action: PayloadAction<any>) => {
                 state.error = action.payload.message;
                 state.loading = false;
             })

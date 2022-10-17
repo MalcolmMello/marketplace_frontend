@@ -67,4 +67,32 @@ export const RequestItem = styled.div`
             }
         }
     }
+    .bottom--area {
+        display: flex;
+        justify-content: end;
+        border-top: 1px solid #949494;
+        padding-top: 10px;
+        .button--area {
+            padding: 5px;
+            button {
+                margin-left: 10px;
+                width: 200px;
+                height: 50px;
+                border-radius: 10px;
+                border: none;
+                font-weight: bold;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            .cancel {
+                background: none;
+                border: 1px solid #660C27;
+                color: #660C27
+            }
+            .confirm {
+                background: #660C27;
+                color: white
+            }
+        }
+    }
 `
