@@ -10,6 +10,8 @@ import { ViewItem } from '../pages/Menu/Item/ViewItem/ViewItem';
 import { AddItem } from '../pages/Menu/Item/AddItem/AddItem';
 import { Requests } from '../pages/Requests/Requests';
 import { ViewRequest } from '../pages/Requests/ViewRequest/ViewRequest';
+import { Perfil } from '../pages/Perfil/Perfil';
+import { Shop } from '../pages/Perfil/Shop/Shop';
 
 
 export const MenuRoutes = () => {
@@ -30,6 +32,9 @@ export const MenuRoutes = () => {
         ]},
         { path: '/pedidos', element: <Requests />, children: [
             { path: 'view/:id', element: <ViewRequest /> }
+        ]},
+        { path: '/perfil', element: <Perfil />, children: [
+            { path: '', element: <Shop /> }
         ] }
     ]);
 };
