@@ -4,13 +4,14 @@ export const RequestItem = styled.div`
     font-size: 17px;
     .top--area {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         height: 60px;
         background-color: #FFF;
         box-shadow: 0px 0px 30px rgb(227,227,227);
         padding: 10px;
         margin-bottom: 20px;
-        border-radius: 10px
+        border-radius: 10px;
     }
     .address {
         display: flex;
@@ -89,7 +90,7 @@ export const RequestItem = styled.div`
                 border: 1px solid #660C27;
                 color: #660C27
             }
-            .confirm {
+            .confirm, .send, .ready {
                 background: #660C27;
                 color: white
             }

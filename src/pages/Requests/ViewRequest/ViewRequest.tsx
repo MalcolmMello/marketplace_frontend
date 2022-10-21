@@ -20,6 +20,7 @@ export const ViewRequest = () => {
                             created_at={item.created_at}
                             address={item.address}
                             products={item.products}
+                            isDelivery={item.isDelivery}
                         />
                     )
                 }
