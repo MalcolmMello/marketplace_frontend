@@ -1,5 +1,7 @@
 import * as C from './styles'
 import { Link, Outlet } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
+import { useState } from 'react';
 
 export const Perfil = () => {
     return (

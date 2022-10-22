@@ -16,6 +16,29 @@ export const Navbar = styled.header`
             cursor: pointer;
         };
     };
+    .perfil--data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        height: 150px;
+        background-color: #FFF;
+        border-radius: 18px;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%
+        };
+
+        h3 {
+            margin: 2px
+        }
+    }
     .navegation {
         ul {
             padding: 0;

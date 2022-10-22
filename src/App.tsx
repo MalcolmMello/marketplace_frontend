@@ -3,6 +3,7 @@ import { MenuRoutes } from './routes/MenuRoutes'
 import { fetchCategories } from './redux/sliceCategories';
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks';
+import { getPerfilData } from "./redux/slicePerfil";
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
 
     useEffect(() => {
         dispatch(fetchCategories());
+        dispatch(getPerfilData());
     }, [dispatch]);
     
     return (
