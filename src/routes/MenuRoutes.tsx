@@ -12,6 +12,7 @@ import { Requests } from '../pages/Requests/Requests';
 import { ViewRequest } from '../pages/Requests/ViewRequest/ViewRequest';
 import { Perfil } from '../pages/Perfil/Perfil';
 import { Shop } from '../pages/Perfil/Shop/Shop';
+import { Address } from '../pages/Perfil/Address/Address';
 
 
 export const MenuRoutes = () => {
@@ -34,7 +35,8 @@ export const MenuRoutes = () => {
             { path: 'view/:id', element: <ViewRequest /> }
         ]},
         { path: '/perfil', element: <Perfil />, children: [
-            { path: '', element: <Shop /> }
+            { path: '', element: <Shop /> },
+            { path: 'address', element: <Address /> }
         ] }
     ]);
 };

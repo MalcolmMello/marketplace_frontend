@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { StringMappingType } from 'typescript';
 
 const baseURL = 'http://localhost:5000/companies';
 
 const headers = { 
-    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY2NDU4MjIxLCJleHAiOjE2NjY0NjE4MjF9.zMbgxl_-es-cTStEZAmTK6MWRMsxB1gYhJBxFnQrof4',
+    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY2OTA4OTIxLCJleHAiOjE2NjY5MTI1MjF9.cnXBbhumE3euFbKmmzuDaKRKAmRJqcvsyP2n6_4WnYQ',
 };
 
 type Response = {
@@ -15,14 +16,25 @@ type Response = {
     cover: string
 }
 
+type AddressResponse = {
+    zip_code: string,
+    street: string,
+    state: string,
+    city: string,
+    district: string,
+    number: string
+};
+
 interface Perfil {
     perfil: Response,
+    address: AddressResponse,
     loading: boolean,
     error: string | null
 };
 
 const INITIAL_STATE = {
     perfil: {},
+    address: {},
     loading: false,
     error: null
 } as Perfil;
@@ -30,6 +42,20 @@ const INITIAL_STATE = {
 export const getPerfilData = createAsyncThunk("getperfil/companies", async (arg, thunkAPI) => {
     try {
         const response = await axios.get(baseURL+'/perfil', { headers });
+        if(response.status !== 200) {
+            return new Error();
+        } else {
+            let { data } = response;
+            return data;
+        }
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+});
+
+export const getAddress = createAsyncThunk("getaddress/companies", async (arg, thunkAPI) => {
+    try {
+        const response = await axios.get(baseURL+'/address', { headers });
         if(response.status !== 200) {
             return new Error();
         } else {
@@ -86,6 +112,19 @@ const slicePerfil = createSlice({
                 state.perfil = action.payload;
             })
             .addCase(editPerfil.rejected, (state, action: PayloadAction<any>) => {
+                state.loading = false;
+                state.error = action.payload.message;
+            })
+            .addCase(getAddress.pending, (state, action) => {
+                state.error = null;
+                state.loading = true;
+            })
+            .addCase(getAddress.fulfilled, (state, action: PayloadAction<AddressResponse>) => {
+                state.error = null;
+                state.loading = false;
+                state.address = action.payload;
+            })
+            .addCase(getAddress.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = action.payload.message;
             })

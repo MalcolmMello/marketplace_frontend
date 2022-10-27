@@ -23,7 +23,7 @@ export const Perfil = () => {
                         <Link to="">Loja</Link>
                     </li>
                     <li>
-                        <Link to="perfil">
+                        <Link to="address">
                             Endereço
                         </Link>
                     </li>
