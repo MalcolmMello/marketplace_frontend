@@ -38,6 +38,11 @@ export const Container = styled.section`
         }
     }
 
+    .no--requests {
+        padding: 15px 5px;
+        margin-top: 20px
+    }
+
     .filtered--top {
         background-color: #FFF;
         font-weight: bold;

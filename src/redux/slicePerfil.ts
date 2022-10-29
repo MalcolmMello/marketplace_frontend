@@ -5,7 +5,7 @@ import { StringMappingType } from 'typescript';
 const baseURL = 'http://localhost:5000/companies';
 
 const headers = { 
-    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY3MDAzMjkyLCJleHAiOjE2NjcwMDY4OTJ9.onQEFvK_NMieTx4F7yRhwH49zfeP1yWg9qJemu9XlzU',
+    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY3MDQxMjY3LCJleHAiOjE2NjcwNDQ4Njd9.hJZlNmHWMMrzaOSMiR1GBXPTzskMu1I3jTwKAT7wMFA',
 };
 
 type Response = {
