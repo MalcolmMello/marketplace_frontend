@@ -5,7 +5,7 @@ import { StringMappingType } from 'typescript';
 const baseURL = 'http://localhost:5000/companies';
 
 const headers = { 
-    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY2OTA4OTIxLCJleHAiOjE2NjY5MTI1MjF9.cnXBbhumE3euFbKmmzuDaKRKAmRJqcvsyP2n6_4WnYQ',
+    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY3MDAzMjkyLCJleHAiOjE2NjcwMDY4OTJ9.onQEFvK_NMieTx4F7yRhwH49zfeP1yWg9qJemu9XlzU',
 };
 
 type Response = {
@@ -24,6 +24,15 @@ type AddressResponse = {
     district: string,
     number: string
 };
+
+type AddressData = {
+    zip_code: string;
+    street: string;
+    district: string;
+    city: string;
+    state: string;
+    address_number: string;
+}
 
 interface Perfil {
     perfil: Response,
@@ -81,6 +90,21 @@ export const editPerfil = createAsyncThunk('editcompanies/perfil', async (formDa
     }
 });
 
+export const editAddress = createAsyncThunk('editaddress/address', async (data: AddressData, thunkAPI) => {
+    try {
+        const body = data;
+        const response = await axios.put(baseURL+'/updateaddress', body, { headers: headers });
+        if(response.status !== 200) {
+            return new Error()
+        } else {
+            let { data } = response;
+            return data;
+        }
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
 const slicePerfil = createSlice({
     name: 'perfil',
     initialState: INITIAL_STATE,
@@ -125,6 +149,19 @@ const slicePerfil = createSlice({
                 state.address = action.payload;
             })
             .addCase(getAddress.rejected, (state, action: PayloadAction<any>) => {
+                state.loading = false;
+                state.error = action.payload.message;
+            })
+            .addCase(editAddress.pending, (state, action) => {
+                state.error = null;
+                state.loading = true;
+            })
+            .addCase(editAddress.fulfilled, (state, action: PayloadAction<AddressResponse>) => {
+                state.error = null;
+                state.loading = false;
+                state.address = action.payload;
+            })
+            .addCase(editAddress.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = action.payload.message;
             })

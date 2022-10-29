@@ -1,7 +1,8 @@
 import * as C from './styles'
 import { useEffect, useState } from 'react';
 import { apiAddress } from './FindAddress';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { editAddress } from '../../../redux/slicePerfil';
 
 type Address = {
     cep: string,
@@ -19,9 +20,11 @@ export const Address = () => {
     const [data, setData] = useState({ zip_code: '', street: '', district: '', city: '', state: '', address_number: '' });
     const [disableCep, setDisableCep] = useState(false);
 
+    const dispatch = useAppDispatch();
+
+
     useEffect(() => {
         if(data.zip_code.length == 8) {
-            setDisableCep(true);
             findAddress(data.zip_code);
         }
     }, [data.zip_code]);
@@ -29,28 +32,48 @@ export const Address = () => {
     const findAddress = async (cep: string) => {
         let address: Address = await apiAddress.foundAddressByZipCode(cep);
 
-        if(address.erro) {
-            alert("Address doesn't exist");
-            setData({...data, zip_code: ''});
-            setDisableCep(false);
-        };
+        setDisableCep(true);
 
-        setData({
-            ...data,
-            street: address.logradouro,
-            state: address.uf,
-            city: address.localidade,
-            district: address.bairro
-        })
+        if(address.erro) {
+            setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
+            alert("Endereço não existe.");
+            setDisableCep(false);
+        } else {
+            setData({
+                ...data,
+                street: address.logradouro,
+                state: address.uf,
+                city: address.localidade,
+                district: address.bairro
+            })
+        }
+    };
+
+    const handleChangeAddress = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if(data.zip_code == '' || data.zip_code.length < 8) {
+            alert('Digite um endereço válido');
+            setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
+            setDisableCep(false);
+        } else {
+            try {
+                const result = await dispatch(editAddress(data)).unwrap();
+                setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
+                setDisableCep(false);
+            } catch (error) {
+                alert(`${error}`);
+            };
+        };
     };
 
     return (
         <C.Address>
-            <form action="">
+            <form onSubmit={handleChangeAddress}>
                 <div className='input--area'>
                     <label>CEP</label>
                     <input
-                        type="text"
+                        type="number"
                         className='short--input'
                         value={data.zip_code}
                         onChange={e => setData({...data, zip_code: e.target.value})}
@@ -106,6 +129,7 @@ export const Address = () => {
                         onChange={e => setData({...data, address_number: e.target.value})}
                     />
                 </div>
+                <button type='submit'>Enviar</button>
             </form>
             <section className='address--area'>
                 <img src="https://img.icons8.com/ios-filled/50/FA5252/marker.png"/>

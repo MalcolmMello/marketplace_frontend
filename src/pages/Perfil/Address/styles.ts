@@ -46,4 +46,16 @@ export const Address = styled.main`
             margin-bottom: 2px;
         }
     }
+    button {
+        width: 198px;
+        height: 49px;
+        background-color: #660C27;
+        border: none;
+        border-radius: 10px;
+        color: #FFF;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
 `;

@@ -24,7 +24,10 @@ export const Navbar = () => {
                         <Link to="produtos">Seus Produtos</Link>
                     </li>
                     <li>
-                        <Link to="pedidos">Pedidos</Link>
+                        <Link to="pedidos">Novos Pedidos</Link>
+                    </li>
+                    <li>
+                        <Link to="historico">Pedidos</Link>
                     </li>
                     <li>
                         <Link to="perfil">Perfil</Link>

@@ -13,6 +13,8 @@ import { ViewRequest } from '../pages/Requests/ViewRequest/ViewRequest';
 import { Perfil } from '../pages/Perfil/Perfil';
 import { Shop } from '../pages/Perfil/Shop/Shop';
 import { Address } from '../pages/Perfil/Address/Address';
+import { HistoricRequests } from '../pages/HistoricRequests/HistoricRequests';
+import { ViewHistoricRequests } from '../pages/HistoricRequests/ViewHistoricRequests/ViewHistoricRequests';
 
 
 export const MenuRoutes = () => {
@@ -37,6 +39,9 @@ export const MenuRoutes = () => {
         { path: '/perfil', element: <Perfil />, children: [
             { path: '', element: <Shop /> },
             { path: 'address', element: <Address /> }
+        ]},
+        { path: '/historico', element: <HistoricRequests />, children: [
+            { path: '', element: <ViewHistoricRequests /> }
         ] }
     ]);
 };
