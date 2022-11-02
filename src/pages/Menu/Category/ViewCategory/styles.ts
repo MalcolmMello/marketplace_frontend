@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const ViewCategory = styled.div<{options: boolean}>`
+export const ViewCategory = styled.div`
     background-color: #FFF;
     border-radius: 15px;
     color: #660C27;
+    font-weight: 500;
     .container {
         box-shadow: 0px 3px 40px rgb(227,227,227);
-        font-weight: bold;
     }
     .top--area {
         display: flex;
@@ -14,7 +14,8 @@ export const ViewCategory = styled.div<{options: boolean}>`
         align-items: center;
         padding: 15px 15px;
         h1 {
-            margin: 0
+            margin: 0;
+            font-weight: 500;
         };
         button {
             height: 47px;
@@ -37,7 +38,8 @@ export const ViewCategory = styled.div<{options: boolean}>`
         }
     }
     .category--menu ul {
-        padding: 15px 30px
+        padding: 15px 30px;
+        color: #A0888F;
     }
     .category--items {
         padding: 15px 15px;
@@ -48,11 +50,40 @@ export const ViewCategory = styled.div<{options: boolean}>`
             justify-content: center;
             align-items: end;
             cursor: pointer;
-            .choose-option {
-                display: ${props => props.options ? 'flex' : 'none'};
+            .active {
+                display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    color: #660C27;
+
+                    font-weight: 500;
+                    width: 100%;
+                    height: 100%;
+                    padding: 3px;
+                }
+                a:hover {
+                    background-color: rgb(227,227,227)
+                }
+                background: #FFF;
+                box-shadow: 0px 5px 40px rgb(215,215,215);
+                position: absolute;
+                width: 125px;
+                height: 80px;
+                border-radius: 10px;
+                margin-top: -105px
+            }
+            .choose-option {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-weight: 500;
                 a {
                     display: flex;
                     align-items: center;

@@ -40,6 +40,13 @@ export const NestedMenu = styled.section`
         padding: 10px 5px 0px 10px;
         height: 55px;
         margin: 0;
+        font-weight: 500;
+        .active {
+            a {
+                color: #660C27
+            }
+            border-bottom: 3px solid #660c27
+        }
         li {
             margin-right: 20px;
             border-bottom: 3px solid transparent;
@@ -47,17 +54,16 @@ export const NestedMenu = styled.section`
             height: 65%;
             a {
                 color: #949494;
-                font-weight: bold;
                 text-decoration: none;
                 transition: all ease 0.2s;
                 font-size: 16px
             }
         };
-        a:hover {
-            color: #660C27
-        }
         li:hover {
-            border-bottom: 3px solid #660c27
+            border-bottom: 3px solid #660c27;
+            a {
+                color: #660C27
+            }
         }
     }
 `;

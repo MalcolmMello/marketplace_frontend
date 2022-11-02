@@ -1,9 +1,9 @@
 import * as C from './styles'
-import { Link, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { useState } from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 export const Perfil = () => {
+    const { pathname } = useLocation();
+    
     return (
         <C.Perfil>
             <section className='title'>
@@ -19,10 +19,10 @@ export const Perfil = () => {
             </section>
             <C.NestedMenu>
                 <ul className='menu'>
-                    <li>
+                    <li className={`${pathname === '/perfil' ? 'active' : ''}`}>
                         <Link to="">Loja</Link>
                     </li>
-                    <li>
+                    <li className={`${pathname === '/perfil/address' ? 'active' : ''}`}>
                         <Link to="address">
                             Endereço
                         </Link>

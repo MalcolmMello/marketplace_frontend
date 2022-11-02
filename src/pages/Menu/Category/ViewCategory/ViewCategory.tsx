@@ -6,15 +6,13 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks';
 
 export const ViewCategory = () => {
     const { categories, loading, error } = useAppSelector((state) => state.categories);
-    const [isOptionOpen, setIsOptionOpen] = useState(false);
-
-    const openOptionsMenu = () => setIsOptionOpen(!isOptionOpen);
+    const [isOptionOpen, setIsOptionOpen] = useState('');
 
     return (
-        <C.ViewCategory options={isOptionOpen}>
+        <C.ViewCategory >
             <section className='container'>
                 <div className='top--area'>
-                    <h1>Categorias</h1>
+                    <h1>Categorias do Petshop</h1>
                     <Link to="add">
                         <button>+ Adicionar Categoria</button>
                     </Link>
@@ -23,7 +21,7 @@ export const ViewCategory = () => {
                     <div className='category--menu'>
                         <ul>
                             <li>Nome</li>
-                            <li>Nº Produtos</li>
+                            <li>Número de Produtos</li>
                             <li></li>
                         </ul>
                     </div>
@@ -37,11 +35,11 @@ export const ViewCategory = () => {
                         <li>{item.category_name}</li>
                         <li>{item.products !== null ? item.products.length : 0}</li>
                         <li className='options'>
-                            <div className='choose-option'>
+                            <div onMouseLeave={() => setIsOptionOpen('')} className={`${isOptionOpen === item.id ? 'active' : 'choose-option'}`}>
                                 <Link to={`add/${item.id}`}>Editar Item</Link>
                                 <Link to="">Excluir Item</Link>
                             </div>
-                            <div className='options--item' onClick={openOptionsMenu}>
+                            <div className='options--item' onClick={() => setIsOptionOpen(item.id)}>
                                 <div></div>
                                 <div></div>
                                 <div></div>

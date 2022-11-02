@@ -1,7 +1,9 @@
 import * as C from './styles'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 export const Menu = () => {
+    const { pathname } = useLocation();
+    
     return (
         <C.Menu>
             <section className='title'>
@@ -17,15 +19,15 @@ export const Menu = () => {
             </section>
             <C.NestedMenu>
                 <ul className='menu'>
-                    <li>
+                    <li className={`${pathname === '/produtos' ? 'active' : ''}`}>
                         <Link to="">Menu</Link>
                     </li>
-                    <li>
+                    <li className={`${pathname === '/produtos/category' ? 'active' : ''}`}>
                         <Link to="category">
                             Categorias
                         </Link>
                     </li>
-                    <li>
+                    <li className={`${pathname === '/produtos/item' ? 'active' : ''}`}>
                         <Link to="item">
                             Produtos
                         </Link>

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ViewItem = styled.section<{options: boolean}>`
+export const ViewItem = styled.section`
     background-color: #FFF;
     border-radius: 15px;
     box-shadow: 0px 0px 30px rgb(227,227,227);
@@ -30,7 +30,7 @@ export const ViewItem = styled.section<{options: boolean}>`
     }
     .product--area {
         color: #660C27;
-        font-weight: bold;
+        font-weight: 500;
         padding: 0px 15px;
     };
     .product--area ul {
@@ -62,8 +62,34 @@ export const ViewItem = styled.section<{options: boolean}>`
             align-items: end;
             cursor: pointer;
             width: 5%;
+            .active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    color: #000;
+                    width: 100%;
+                    height: 100%;
+                    padding: 3px;
+                }
+                a:hover {
+                    background-color: rgb(227,227,227)
+                }
+                background: #FFF;
+                box-shadow: 0px 5px 40px rgb(215,215,215);
+                position: absolute;
+                width: 125px;
+                height: 80px;
+                border-radius: 10px;
+                margin-top: -105px
+            }
             .choose-option {
-                display: ${props => props.options ? 'flex' : 'none'};
+                display: none;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
@@ -104,6 +130,9 @@ export const ViewItem = styled.section<{options: boolean}>`
         list-style: none;
         padding-bottom: 15px;
         color: #660C27;
+        .status {
+            color: #7BC022
+        }
         .name {
             display: flex;
             align-items: center;
@@ -118,7 +147,7 @@ export const ViewItem = styled.section<{options: boolean}>`
             display: flex;
             align-items: center;
             width: 15%;
-            font-weight: normal;
+            font-weight: 500;
         }
         .lenght {
             display: flex;

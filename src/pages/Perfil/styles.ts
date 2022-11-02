@@ -40,6 +40,12 @@ export const NestedMenu = styled.section`
         padding: 10px 5px 0px 10px;
         height: 55px;
         margin: 0;
+        .active {
+            a {
+                color: #660C27
+            }
+            border-bottom: 3px solid #660c27
+        }
         li {
             margin-right: 20px;
             border-bottom: 3px solid transparent;

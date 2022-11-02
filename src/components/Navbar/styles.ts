@@ -40,9 +40,16 @@ export const Navbar = styled.header`
         }
     }
     .navegation {
+        .active {
+            border-left: 6px solid #fff;
+            a {
+                color: #FFF
+            }
+        }
         ul {
             padding: 0;
             list-style: none;
+            font-weight: 600;
             li {
                 display: flex;
                 justify-content: left;
@@ -56,14 +63,17 @@ export const Navbar = styled.header`
                 cursor: pointer;
                 a {
                     text-decoration: none;
-                    color: #FFF;
                     width: 100%;
-                    height: 100%
+                    height: 100%;
+                    transition: all ease 0.3s;
+                    color: #FFFFFF8F;
                 }
             }
             li:hover {
-                border-left: 4px solid #fff;
-                font-weight: bold;
+                border-left: 6px solid #fff;
+                a {
+                    color: #FFF
+                }
             }
         }
     }

@@ -1,10 +1,11 @@
 import * as C from './styles';
 import logo from '../../assets/assinatura_completa.svg'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import logodefault from '../../assets/camera.png'
 export const Navbar = () => {
-    const { perfil, loading, error } = useAppSelector((state) => state.perfil);    
+    const { perfil, loading, error } = useAppSelector((state) => state.perfil);  
+    const { pathname } = useLocation();  
     
     return (
         <C.Navbar>
@@ -17,19 +18,19 @@ export const Navbar = () => {
             </div>
             <nav className='navegation'>
                 <ul>
-                    <li>
+                    <li className={`${pathname === '/' ? 'active' : ''}`}>
                         <Link to="/">Home</Link>
                     </li>
-                    <li>
+                    <li className={`${pathname.includes('/produtos') ? 'active' : ''}`}>
                         <Link to="produtos">Seus Produtos</Link>
                     </li>
-                    <li>
+                    <li className={`${pathname.includes('/pedidos') ? 'active' : ''}`}>
                         <Link to="pedidos">Novos Pedidos</Link>
                     </li>
-                    <li>
+                    <li className={`${pathname.includes('/historico') ? 'active' : ''}`}>
                         <Link to="historico">Pedidos</Link>
                     </li>
-                    <li>
+                    <li className={`${pathname.includes('/perfil') ? 'active' : ''}`}>
                         <Link to="perfil">Perfil</Link>
                     </li>
                 </ul>

@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL = 'http://localhost:5000/companies';
 
 const headers = { 
-    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY3MDQxMjY3LCJleHAiOjE2NjcwNDQ4Njd9.hJZlNmHWMMrzaOSMiR1GBXPTzskMu1I3jTwKAT7wMFA',
+    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY3Mzk3NDMxLCJleHAiOjE2Njc0MDEwMzF9.5XlL_WTKBXqdw_r92FAebmcbTGN42jCpmMX8LwIryqk',
 };
 type Request = {
     request_id: string,

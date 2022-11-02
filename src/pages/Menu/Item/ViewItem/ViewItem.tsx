@@ -5,12 +5,10 @@ import { useState } from 'react';
 
 export const ViewItem = () => {
     const { categories, loading, error } = useAppSelector((state) => state.categories);
-    const [isOptionOpen, setIsOptionOpen] = useState(false);
-
-    const openOptionsMenu = () => setIsOptionOpen(!isOptionOpen);
+    const [isOptionOpen, setIsOptionOpen] = useState('');
 
     return (
-        <C.ViewItem options={isOptionOpen}>
+        <C.ViewItem>
             <div className='container'>
                 <div className='top--area'>
                     <h1>Produtos Cadastrados</h1>
@@ -37,14 +35,14 @@ export const ViewItem = () => {
                         <li>{item.category_name}</li>
                         <li className='name'> <img src={`http://localhost:5000/media/${product.front_cover}.jpg`} alt="" /> {product.product_name}</li>
                         <li className='lenght'>0 <br /><span>Unidades</span></li>
-                        <li>Ativo</li>
+                        <li className='status'>Ativo</li>
                         <li>R$ {product.price?.toFixed(2).replace('.', ',')}</li>
                         <li className='options'>
-                            <div className='choose-option'>
+                            <div onMouseLeave={() => setIsOptionOpen('')} className={`${isOptionOpen === product.id ? 'active' : 'choose-option'}`}>
                                 <Link to={`add/${product.id}`}>Editar Item</Link>
                                 <Link to="">Excluir Item</Link>
                             </div>
-                            <div className='options--item' onClick={openOptionsMenu}>
+                            <div className='options--item' onClick={() => setIsOptionOpen(product.id)}>
                                 <div></div>
                                 <div></div>
                                 <div></div>
