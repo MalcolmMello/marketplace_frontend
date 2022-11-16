@@ -4,9 +4,12 @@ import { fetchCategories } from './redux/sliceCategories';
 import { useEffect } from 'react';
 import { useAppDispatch } from './hooks';
 import { getAddress, getPerfilData } from "./redux/slicePerfil";
+import { SignUp } from "./pages/SignUp/SignUp";
+import { SignUpRoutes } from "./routes/SignUpRoutes";
 
 
 function App() {
+    const user = JSON.parse(String(localStorage.getItem('profile')));
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -17,8 +20,17 @@ function App() {
     
     return (
         <div className="App">
-            <Navbar />
-            <MenuRoutes />
+            {!user ? 
+                <>
+                    <SignUpRoutes />
+                </> 
+                    : 
+                (
+                    <>
+                        <Navbar />
+                        <MenuRoutes />
+                    </>
+                )}
         </div>
     );
 }

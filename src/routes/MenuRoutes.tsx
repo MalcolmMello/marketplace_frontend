@@ -15,6 +15,8 @@ import { Shop } from '../pages/Perfil/Shop/Shop';
 import { Address } from '../pages/Perfil/Address/Address';
 import { HistoricRequests } from '../pages/HistoricRequests/HistoricRequests';
 import { ViewHistoricRequests } from '../pages/HistoricRequests/ViewHistoricRequests/ViewHistoricRequests';
+import { SignUp } from '../pages/SignUp/SignUp';
+import { Responsible } from '../pages/SignUp/ResponsibleData/Responsible';
 
 
 export const MenuRoutes = () => {
@@ -42,6 +44,9 @@ export const MenuRoutes = () => {
         ]},
         { path: '/historico', element: <HistoricRequests />, children: [
             { path: '', element: <ViewHistoricRequests /> }
-        ] }
+        ]},
+        { path: '/signup', element: <SignUp />, children: [
+            {path: '', element: <Responsible />}
+        ]}
     ]);
 };
