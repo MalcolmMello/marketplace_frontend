@@ -37,7 +37,7 @@ export const Responsible = () => {
                             <label>Senha</label>
                             <input type="text" />
                         </div>
-                        <div className='input--area'>
+                        <div className='input--area repeat'>
                             <label>Repita a senha</label>
                             <input type="text" />
                         </div>

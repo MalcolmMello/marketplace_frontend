@@ -36,8 +36,22 @@ export const Responsible = styled.main`
             justify-content: space-between;
             margin-top: 10px
         }
-        .password--area {
-            margin-top: 10px
+        .description--area {
+            margin-top: 20px;
+
+            textarea {
+                width: 100%;
+                height: 130px;
+                border-radius: 12px;
+                resize: none;
+                border: 1px solid #FF175B;
+                padding: 7px;
+                font-size: 17px;
+            }
+
+            textarea:focus {
+                outline: 1px solid #FF175B;
+            }
         }
 
         .button--area {

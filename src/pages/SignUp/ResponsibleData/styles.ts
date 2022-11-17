@@ -37,7 +37,10 @@ export const Responsible = styled.main`
             margin-top: 10px
         }
         .password--area {
-            margin-top: 10px
+            margin-top: 10px;
+            .repeat {
+                margin-top: 10px;
+            }
         }
 
         .button--area {

@@ -1,6 +1,8 @@
 import * as C from './styles';
 import { useNavigate } from 'react-router-dom';
 
+/* company_name, company_email, company_phone_number, description, cnpj  */
+
 export const CompanyData = () => {
     const navigate = useNavigate();
     return (
@@ -9,18 +11,12 @@ export const CompanyData = () => {
                 <h1>Dados do Responsável pela Loja</h1>
                 <form>
                     <div className='input--area'>
-                        <label>Nome Completo</label>
+                        <label>Nome da Empresa</label>
                         <input type="text" />
                     </div>
-                    <div className='two--inputs'>
-                        <div className='input--area'>
-                            <label>RG</label>
-                            <input type="text" />
-                        </div>
-                        <div className='input--area'> 
-                            <label>CPF</label>
-                            <input type="text" />
-                        </div>
+                    <div className='input--area'> 
+                        <label>CNPJ</label>
+                        <input type="text" />
                     </div>
                     <div className='two--inputs'>
                         <div className='input--area'>
@@ -32,15 +28,8 @@ export const CompanyData = () => {
                             <input type="text" />
                         </div>
                     </div>
-                    <div className='password--area'>
-                        <div className='input--area'>
-                            <label>Senha</label>
-                            <input type="text" />
-                        </div>
-                        <div className='input--area'>
-                            <label>Repita a senha</label>
-                            <input type="text" />
-                        </div>
+                    <div className='description--area'>
+                        <textarea placeholder='Digite aqui a descrição da empresa...'></textarea>
                     </div>
                     <div className='button--area'>
                         <button onClick={() => navigate("/address-data")}>Continuar</button>
