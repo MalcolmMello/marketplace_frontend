@@ -13,9 +13,10 @@ export const Responsible = styled.main`
         justify-content: center;
     }
 
-    form {
+    .form {
         width: 70%;
         input {
+            width: 100%;
             height: 40px;
             border-radius: 12px;
             border: 1px solid #FF175B;
