@@ -5,16 +5,47 @@ export const Responsible = styled.main`
         color: #FF175B
     }
     .container {
-        max-width: 728px;
+        max-width: 1024px;
         margin: auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        .map {
+            width: 480px;
+            height: 480px
+        }
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
     }
 
     .form {
-        width: 70%;
+        width: 50%;
+        .results {
+            cursor: pointer;
+            padding: 5px;
+            .result {
+                margin-bottom: 11px;
+                .place {
+                    font-size: 15px;
+                    font-weight: 500;
+                    transition: all ease 0.2s
+                }
+                .name {
+                    font-size: 12px
+                }
+            }
+            .result:hover {
+                .place {
+                    color: #FF175B
+                }
+            }
+        }
         input {
             width: 100%;
             height: 40px;
