@@ -1,11 +1,22 @@
 import * as C from './styles';
 import logo from '../../assets/assinatura_completa.svg';
 import { Link, useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import logodefault from '../../assets/camera.png'
+import { useEffect } from 'react';
+import { fetchCategories } from '../../redux/sliceCategories';
+import { getAddress, getPerfilData } from '../../redux/slicePerfil';
+
 export const Navbar = () => {
     const { perfil, loading, error } = useAppSelector((state) => state.perfil);  
     const { pathname } = useLocation();  
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+        dispatch(getPerfilData());
+        dispatch(getAddress());
+    }, [dispatch])
     
     return (
         <C.Navbar>

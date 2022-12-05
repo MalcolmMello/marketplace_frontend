@@ -44,7 +44,7 @@ export const AddressData = () => {
     }, [search])
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(getLocation)
+        navigator.geolocation.getCurrentPosition(getLocation);
     }, [])
 
     const getLocation = async (e: GeolocationPosition) => {
@@ -119,7 +119,7 @@ export const AddressData = () => {
                                             }
                                         }} 
                                         draggable={true} 
-                                        position={[Number(currentAddress?.lat), Number(currentAddress?.lon)]} 
+                                        position={[Number(currentAddress.lat), Number(currentAddress.lon)]} 
                                         icon={icon}
                                     >
 

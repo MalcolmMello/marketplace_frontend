@@ -14,6 +14,11 @@ export const Responsible = styled.main`
     }
 
     form {
+        .error--message {
+            font-size: 12px;
+            color: red;
+            min-height: 18px;
+        }
         width: 70%;
         input {
             height: 40px;
@@ -34,12 +39,12 @@ export const Responsible = styled.main`
         .two--inputs {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px
+            margin-top: 5px
         }
         .password--area {
-            margin-top: 10px;
+            margin-top: 5px;
             .repeat {
-                margin-top: 10px;
+                margin-top: 5px;
             }
         }
 
@@ -47,7 +52,7 @@ export const Responsible = styled.main`
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 15px;
             button {
                 width: 100%;
                 height: 49px;

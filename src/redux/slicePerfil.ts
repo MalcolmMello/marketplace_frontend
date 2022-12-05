@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { StringMappingType } from 'typescript';
 
 const baseURL = 'http://localhost:5000/companies';
 
