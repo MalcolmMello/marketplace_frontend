@@ -63,7 +63,8 @@ export const AddressData = () => {
             display_place: e.display_place,
             lat: e.lat,
             lon: e.lon
-        })
+        });
+        console.log(currentAddress);
     }
 
     function ResetCenterView(props: Props) {
