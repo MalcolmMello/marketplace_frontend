@@ -5,6 +5,9 @@ import useDebounce from './useDebounce';
 import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { useAppDispatch } from '../../../hooks';
+import { addressData } from '../../../redux/formSlice';
+import { useNavigate } from 'react-router-dom';
 
 type Address = {
     display_place?: string,
@@ -28,7 +31,11 @@ export const AddressData = () => {
     const [address, setAddress] = useState<Address[]>([]);
     const [currentAddress, setCurrentAddress] = useState<Address>();
     const [autocomplete, setAutocomplete] = useState("");
-    const [search, setSearch] = useState("");    
+    const [number, setNumber] = useState("");
+    const [search, setSearch] = useState(""); 
+    
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     
     const markerRef = useRef<any>(null);
 
@@ -41,21 +48,22 @@ export const AddressData = () => {
 
     useEffect(() => {
         handleSearch();
-    }, [search])
+    }, [search]);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(getLocation);
-    }, [])
+    }, []);
 
     const getLocation = async (e: GeolocationPosition) => {
         const { data } = await axios.get(`https://us1.locationiq.com/v1/reverse?key=${process.env.REACT_APP_LOCATIONIQ_ACESS_TOKEN}&lat=${e.coords.latitude}&lon=${e.coords.longitude}&format=json`);
         setCurrentAddress(data);
-    }
+        setAutocomplete(data.display_name);
+    };
 
     const handleSearch = async () => {
         const { data } = await axios.get(`https://api.locationiq.com/v1/autocomplete?key=${process.env.REACT_APP_LOCATIONIQ_ACESS_TOKEN}&q=${autocomplete}&countrycodes=br&limit=5`);
         setAddress(data);
-    }
+    };
 
     const handleChangeAddress = (e: Address) => {
         setCurrentAddress({
@@ -64,8 +72,27 @@ export const AddressData = () => {
             lat: e.lat,
             lon: e.lon
         });
-        console.log(currentAddress);
-    }
+        setAutocomplete(e.display_name);
+        setAddress([]);
+    };
+
+    const handleSubmitAllData = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(number == "") {
+            return alert("Informe o número do endereço.")
+        }
+        if(currentAddress && autocomplete != '') {
+            dispatch(addressData({
+                display_name: currentAddress.display_name,
+                latitude: currentAddress.lat,
+                longitude: currentAddress.lon
+            }));
+            navigate("/signup/subscription-data");
+        } else {
+            alert("Informe o endereço da sua empresa para continuar");
+        }
+        
+    };
 
     function ResetCenterView(props: Props) {
         const { selectPosition } = props;
@@ -84,7 +111,7 @@ export const AddressData = () => {
         }, [selectPosition]);
       
         return null;
-    }
+    };
 
     return (
         <C.Responsible>
@@ -111,7 +138,7 @@ export const AddressData = () => {
                                                 const reverseGeocoding = async (lat: number, long: number) => {
                                                     const { data } = await axios.get(`https://us1.locationiq.com/v1/reverse?key=${process.env.REACT_APP_LOCATIONIQ_ACESS_TOKEN}&lat=${lat}&lon=${long}&format=json`);
                                                     setCurrentAddress(data);
-                                                    console.log(currentAddress)
+                                                    setAutocomplete(data.display_name);
                                                 }
                                                 if (marker != null) {   
                                                     const { lat, lng } = marker.getLatLng();
@@ -129,12 +156,25 @@ export const AddressData = () => {
                                 </MapContainer>
                             }
                     </div>
-                    <div className='form'>
-                        <input 
-                            type="text"
-                            value={autocomplete}
-                            onChange={e => handleChange(e.target.value)}
-                        />
+                    <form className='form' onSubmit={handleSubmitAllData}>
+                        <div className='inputs'>
+                            <div className="first">
+                                <label>Endereço</label>
+                                <input 
+                                    type="text"
+                                    value={autocomplete}
+                                    onChange={e => handleChange(e.target.value)}
+                                />
+                            </div>
+                           <div className="second">
+                            <label>Número</label>
+                                <input 
+                                    type="text"
+                                    value={number}
+                                    onChange={e => setNumber(e.target.value)}
+                                />  
+                           </div>
+                        </div>
                         {address.length > 0 &&
                             <div className='results'>
                                 {
@@ -153,9 +193,9 @@ export const AddressData = () => {
                             </div>
                         }
                         <div className='button--area'>
-                            <button>Continuar</button>
+                            <button type='submit'>Continuar</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </C.Responsible>

@@ -36,7 +36,7 @@ export const CompanyData = () => {
     const handleNextStep = (data: IFormInputs) => {
         dispatch(companyData(data));
         navigate('/signup/address-data');
-    }
+    };
     
     const navigate = useNavigate();
     return (

@@ -26,6 +26,16 @@ export const Responsible = styled.main`
 
     .form {
         width: 50%;
+        .inputs {
+            display: flex;
+            .first {
+                width: 80%
+            }
+            .second {
+                width: 20%;
+                margin-left: 5px;
+            }
+        }
         .results {
             cursor: pointer;
             padding: 5px;

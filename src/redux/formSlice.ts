@@ -18,14 +18,10 @@ type Company = {
 };
 
 type Address = {
-    street: string,
-    district: string,
-    zip_code: string,
-    city: string,
-    state: string,
-    address_number: string,
-    longitude: number,
-    latitude: number
+    display_name: string,
+    address_number?: string,
+    longitude: string,
+    latitude: string
 }
 
 interface CreateAccount {
@@ -51,14 +47,10 @@ const initialState = {
         cnpj: '',
     },
     address_data: {
-        street: '',
-        district: '',
-        zip_code: '',
-        city: '',
-        state: '',
+        display_name: '',
         address_number: '',
-        longitude: 0,
-        latitude: 0
+        longitude: '',
+        latitude: ''
     }
     
 } as CreateAccount
@@ -74,7 +66,7 @@ const authSlice = createSlice({
             state.company_data = action.payload;
         },
         addressData: (state, action: PayloadAction<Address>) => {
-
+            state.address_data = action.payload;
         },
     }
 });
