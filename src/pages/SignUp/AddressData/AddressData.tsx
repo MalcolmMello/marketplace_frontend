@@ -87,7 +87,7 @@ export const AddressData = () => {
                 latitude: currentAddress.lat,
                 longitude: currentAddress.lon
             }));
-            navigate("/signup/subscription-data");
+            navigate("/signup/subscription-info");
         } else {
             alert("Informe o endereço da sua empresa para continuar");
         }

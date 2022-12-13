@@ -8,11 +8,13 @@ export const SignUp = () => {
     const { pathname } = useLocation(); 
 
     useEffect(() => {
-        if(pathname == '/signup') {
-            setPercent(33.3);
-        } else if(pathname == '/signup/company-data') {
-            setPercent(66.6);
-        } else if(pathname == '/signup/address-data') {
+        if(pathname === '/signup') {
+            setPercent(25);
+        } else if(pathname === '/signup/company-data') {
+            setPercent(50);
+        } else if(pathname === '/signup/address-data') {
+            setPercent(75);
+        } else if(pathname === '/signup/subscription-info') {
             setPercent(100);
         }
     }, [pathname])
