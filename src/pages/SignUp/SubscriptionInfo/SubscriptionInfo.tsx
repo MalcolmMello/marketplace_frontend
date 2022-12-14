@@ -1,6 +1,27 @@
 import * as C from './styles';
+import axios from 'axios';
+import { useAppSelector } from '../../../hooks';
+import { useNavigate } from 'react-router-dom';
+
+const baseURL = 'http://localhost:5000';
 
 export const SubscriptionInfo = () => {
+    const form = useAppSelector((state) => state.form);
+
+    const navigate = useNavigate();
+    
+    const handleCreateAccount = async () => {
+        const body = form;
+
+        try {
+            const { data } = await axios.post(`${baseURL}/companies/signup`, body);
+            localStorage.setItem('token', data.token);
+            navigate(`/subscription-data/${data.clientSecret}`);   
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <C.SubscriptionInfo>
             <div className='container'>
@@ -16,7 +37,7 @@ export const SubscriptionInfo = () => {
                                 <h1>R$ 100</h1>
                                 <div className='text'>Por mês</div>
                             </div>
-                            <button>Concluir Cadastro</button>
+                            <button onClick={handleCreateAccount}>Concluir Cadastro</button>
                         </div>
                     </div>
                     <div className='bottom--area--second'>

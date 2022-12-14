@@ -1,8 +1,8 @@
 import * as C from './styles';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
+import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
@@ -11,27 +11,34 @@ const stripePromise = loadStripe(
 export const Subscription = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const [clientSecret, setClientSecret] = useState("");
 
-    useEffect(() => {
-        getClientSecret();
-    }, []);
-
-    const getClientSecret = async () => {
-        const { data } = await axios.get('http://localhost:5000/companies/secret');
-        setClientSecret(data.clientSecret);
-    };
+    const { clientSecret } = useParams();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const createSubscription = async () => {
-        
-    }
+        if(!stripe || !elements) {
+            alert("Stripe ainda não carregou.");
+            return;
+        }
+
+        const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: ''
+            }
+        });
+
+        if(error.message) {
+            setErrorMessage(error.message);
+        }
+    };
 
     return (
         <C.Subscription>
             <div className='container'>
                 <h1>Parceiro Windpet</h1>
                 <div className='content'>
-                    {clientSecret !== '' &&
+                    {clientSecret !== '' && clientSecret !== undefined &&
                         <>
                             <div className='card--area'>
                                 <Elements stripe={stripePromise} options={{clientSecret: clientSecret}}>
@@ -51,7 +58,7 @@ export const Subscription = () => {
                                     <h2>Total</h2>
                                     <h2>R$ 100,00</h2>
                                 </div>
-                                <button onClick={createSubscription}>
+                                <button disabled={!stripe} onClick={createSubscription}>
                                     Finalizar cadastro
                                 </button>
                             </div>

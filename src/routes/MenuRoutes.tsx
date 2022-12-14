@@ -15,6 +15,7 @@ import { Shop } from '../pages/Perfil/Shop/Shop';
 import { Address } from '../pages/Perfil/Address/Address';
 import { HistoricRequests } from '../pages/HistoricRequests/HistoricRequests';
 import { ViewHistoricRequests } from '../pages/HistoricRequests/ViewHistoricRequests/ViewHistoricRequests';
+import { Subscription } from '../pages/SignUp/SubscriptionData/Subscription';
 
 
 export const MenuRoutes = () => {
@@ -43,5 +44,6 @@ export const MenuRoutes = () => {
         { path: '/historico', element: <HistoricRequests />, children: [
             { path: '', element: <ViewHistoricRequests /> }
         ]}
+        ,{ path: 'subscription-data/:clientSecret', element: <Subscription /> }
     ]);
 };

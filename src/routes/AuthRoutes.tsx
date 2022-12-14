@@ -16,7 +16,6 @@ export const SignUpRoutes = () => {
             { path: 'company-data', element: <CompanyData /> },
             { path: 'address-data', element: <AddressData /> },
             { path: 'subscription-info', element: <SubscriptionInfo /> },
-            { path: 'subscription-data', element: <Subscription /> }
         ]},
         
     ]);
