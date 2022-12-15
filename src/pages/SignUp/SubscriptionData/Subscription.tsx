@@ -24,7 +24,7 @@ export const Subscription = () => {
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: ''
+                return_url: 'http://localhost:3000/subscription-status',
             }
         });
 
@@ -59,7 +59,7 @@ export const Subscription = () => {
                                     <h2>R$ 100,00</h2>
                                 </div>
                                 <button disabled={!stripe} onClick={createSubscription}>
-                                    Finalizar cadastro
+                                    Finalizar Pagamento
                                 </button>
                             </div>
                         </>

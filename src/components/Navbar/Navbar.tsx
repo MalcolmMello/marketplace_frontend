@@ -1,22 +1,33 @@
 import * as C from './styles';
 import logo from '../../assets/assinatura_completa.svg';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import logodefault from '../../assets/camera.png'
+import logodefault from '../../assets/camera.png';
 import { useEffect } from 'react';
 import { fetchCategories } from '../../redux/sliceCategories';
-import { getAddress, getPerfilData } from '../../redux/slicePerfil';
+import { getAddress } from '../../redux/slicePerfil';
+import { isLogged } from '../../helpers/isLogged';
 
 export const Navbar = () => {
     const { perfil, loading, error } = useAppSelector((state) => state.perfil);  
-    const { pathname } = useLocation();  
+    const location = useLocation();
+    const { pathname } = location;  
     const dispatch = useAppDispatch();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        dispatch(fetchCategories());
-        dispatch(getPerfilData());
-        dispatch(getAddress());
+        if(isLogged()) {
+            getCompanyData();
+        } else {
+            navigate('/');
+        }
     }, [dispatch])
+
+    const getCompanyData = () => {
+        dispatch(fetchCategories());
+        dispatch(getAddress());
+    }
     
     return (
         <C.Navbar>

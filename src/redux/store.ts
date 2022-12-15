@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authSlice from './authSlice';
 import formSlice from './formSlice';
 import sliceCategories from './sliceCategories';
 import slicePerfil from './slicePerfil';
@@ -10,7 +9,6 @@ const store = configureStore({
         categories: sliceCategories,
         requests: sliceRequests,
         perfil: slicePerfil,
-        auth: authSlice,
         form: formSlice
     }
 });

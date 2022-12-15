@@ -1,11 +1,13 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { token } from '../helpers/token';
 
 const baseURL = 'http://localhost:5000/companies';
 
 const headers = { 
-    'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJ1cmd1ZXJraW5nQGdtYWlsLmNvbSIsImlkIjoiYzZkOTI5ZTQtZWRiNy00ODZlLTk2MjMtOGZjN2E1YTBlZmVlIiwiaWF0IjoxNjY3Mzk3NDMxLCJleHAiOjE2Njc0MDEwMzF9.5XlL_WTKBXqdw_r92FAebmcbTGN42jCpmMX8LwIryqk',
+    'Authorization' : `Bearer ${token}`,
 };
+
 type Request = {
     request_id: string,
     username: string,
