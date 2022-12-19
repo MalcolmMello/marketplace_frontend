@@ -4,7 +4,6 @@ import { useRoutes } from 'react-router-dom';
 import { CompanyData } from '../pages/SignUp/CompanyData/CompanyData';
 import { AddressData } from '../pages/SignUp/AddressData/AddressData';
 import { SignIn } from '../pages/SignIn/SignIn';
-import { Subscription } from '../pages/SignUp/SubscriptionData/Subscription';
 import { SubscriptionInfo } from '../pages/SignUp/SubscriptionInfo/SubscriptionInfo';
 
 

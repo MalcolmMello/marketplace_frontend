@@ -15,7 +15,9 @@ export const Subscription = () => {
     const { clientSecret } = useParams();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const createSubscription = async () => {
+    const createSubscription = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         if(!stripe || !elements) {
             alert("Stripe ainda não carregou.");
             return;
@@ -32,12 +34,12 @@ export const Subscription = () => {
             setErrorMessage(error.message);
         }
     };
-
+    
     return (
         <C.Subscription>
-            <div className='container'>
+            <div className='container'> 
                 <h1>Parceiro Windpet</h1>
-                <div className='content'>
+                <form className='content' onSubmit={createSubscription}>
                     {clientSecret !== '' && clientSecret !== undefined &&
                         <>
                             <div className='card--area'>
@@ -58,13 +60,13 @@ export const Subscription = () => {
                                     <h2>Total</h2>
                                     <h2>R$ 100,00</h2>
                                 </div>
-                                <button disabled={!stripe} onClick={createSubscription}>
+                                <button disabled={!stripe} type="submit">
                                     Finalizar Pagamento
                                 </button>
                             </div>
                         </>
                     }
-                </div>
+                </form>
             </div>
         </C.Subscription>
     )

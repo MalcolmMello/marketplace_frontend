@@ -8,7 +8,7 @@ export const isLogged = () => {
         
         if(decodedToken.exp * 1000 < new Date().getTime()) { 
             logout();
-            return false;
+            return true;
         };
 
         return true;

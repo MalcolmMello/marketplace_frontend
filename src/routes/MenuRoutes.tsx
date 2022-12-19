@@ -44,8 +44,6 @@ export const MenuRoutes = () => {
         ]},
         { path: '/historico', element: <HistoricRequests />, children: [
             { path: '', element: <ViewHistoricRequests /> }
-        ]},
-        { path: 'subscription-data/:clientSecret', element: <Subscription /> },
-        { path: 'subscription-status', element: <SubscriptionStatus /> }
+        ]}
     ]);
 };

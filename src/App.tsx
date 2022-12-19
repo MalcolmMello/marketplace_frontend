@@ -6,9 +6,10 @@ import { loadStripe } from '@stripe/stripe-js';
 import { token } from "./helpers/token";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { getPerfilData } from "./redux/slicePerfil";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { isLogged } from "./helpers/isLogged";
 import { useNavigate } from "react-router-dom";
+import { SubscriptionRoutes } from './routes/SubscriptionRoutes';
 
 const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
@@ -16,6 +17,8 @@ const stripePromise = loadStripe(
 
 function App() {
     const { perfil, loading, error } = useAppSelector((state) => state.perfil); 
+
+    const [status, setStatus] = useState("");
     
     const dispatch = useAppDispatch();
 
@@ -24,35 +27,34 @@ function App() {
     useEffect(() => {
         if(token !== null && isLogged()) {
             dispatch(getPerfilData());
-
-            getSubscriptionStatus();
+            /* getSubscriptionStatus(); */
         } else {
             navigate('/');
         }
     }, [dispatch, token]);
 
-    const getSubscriptionStatus = async () => {
-
-    }
-
     return (
         <div className="App">
+            <Elements stripe={stripePromise}>
             {token == null ? 
-                <Elements stripe={stripePromise}>
+                
                     <SignUpRoutes />
-                </Elements> 
+                
                     : 
-                (
+                (perfil.subscription_status === "active" ? 
                     <>
-                        {perfil.subscription_status === "active" &&
-                            <>
-                                <Navbar />
-                                <MenuRoutes />  
-                            </>
-                        }
-                    </>
+                        <Navbar />
+                        <MenuRoutes />  
+                    </> 
+                        : 
+                    (
+                        <>
+                            <SubscriptionRoutes />
+                        </>
+                    )
                 )
             }
+            </Elements> 
         </div>
     );
 }

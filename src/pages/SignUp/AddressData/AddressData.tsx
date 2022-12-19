@@ -85,7 +85,8 @@ export const AddressData = () => {
             dispatch(addressData({
                 display_name: currentAddress.display_name,
                 latitude: currentAddress.lat,
-                longitude: currentAddress.lon
+                longitude: currentAddress.lon,
+                address_number: number
             }));
             navigate("/signup/subscription-info");
         } else {

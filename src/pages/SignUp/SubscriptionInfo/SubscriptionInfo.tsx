@@ -11,7 +11,7 @@ export const SubscriptionInfo = () => {
     const navigate = useNavigate();
     
     const handleCreateAccount = async () => {
-        const body = form;
+        const body = {...form.address_data, ...form.company_data, ...form.responsible_data}
 
         try {
             const { data } = await axios.post(`${baseURL}/companies/signup`, body);
