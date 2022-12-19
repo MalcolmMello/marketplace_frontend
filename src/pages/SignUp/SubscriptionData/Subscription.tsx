@@ -21,7 +21,7 @@ export const Subscription = () => {
         if(!stripe || !elements) {
             alert("Stripe ainda não carregou.");
             return;
-        }
+        };
 
         const { error } = await stripe.confirmPayment({
             elements,
@@ -32,7 +32,7 @@ export const Subscription = () => {
 
         if(error.message) {
             setErrorMessage(error.message);
-        }
+        };
     };
     
     return (

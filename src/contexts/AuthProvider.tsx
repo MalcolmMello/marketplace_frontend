@@ -37,11 +37,11 @@ const initialData: State = {
 const formReducer = (state: State, action: Action) => {
     switch(action.type) {
         case FormActions.setToken:
-            return {...state, currentStep: action.payload}
+            return {...state, token: action.payload}
         case FormActions.setOnboarding:
-            return {...state, name: action.payload}
+            return {...state, onboarding: action.payload}
         case FormActions.setSubsStatus:
-            return{...state, level: action.payload}
+            return{...state, subscription_status: action.payload}
         default:
             return state;
     }

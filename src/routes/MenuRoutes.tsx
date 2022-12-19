@@ -1,4 +1,13 @@
 import { useRoutes } from 'react-router-dom';
+import { SignUp } from '../pages/SignUp/SignUp';
+import { Responsible } from '../pages/SignUp/ResponsibleData/Responsible';
+import { CompanyData } from '../pages/SignUp/CompanyData/CompanyData';
+import { AddressData } from '../pages/SignUp/AddressData/AddressData';
+import { SignIn } from '../pages/SignIn/SignIn';
+import { SubscriptionInfo } from '../pages/SignUp/SubscriptionInfo/SubscriptionInfo';
+import { Subscription } from '../pages/SignUp/SubscriptionData/Subscription';
+import { SubscriptionStatus } from '../pages/SignUp/SubscriptionStatus/SubscriptionStatus';
+import { SubscriptionRenew } from '../pages/SubscriptionRenew/SubscriptionRenew';
 import { Home } from '../pages/Home/Home';
 import { Menu } from '../pages/Menu/Menu';
 import { Category } from '../pages/Menu/Category/Category';
@@ -15,35 +24,81 @@ import { Shop } from '../pages/Perfil/Shop/Shop';
 import { Address } from '../pages/Perfil/Address/Address';
 import { HistoricRequests } from '../pages/HistoricRequests/HistoricRequests';
 import { ViewHistoricRequests } from '../pages/HistoricRequests/ViewHistoricRequests/ViewHistoricRequests';
-import { Subscription } from '../pages/SignUp/SubscriptionData/Subscription';
-import { SubscriptionStatus } from '../pages/SignUp/SubscriptionStatus/SubscriptionStatus';
+import RequireAuth from '../components/RequireAuth/RequireAuth';
+
 
 
 export const MenuRoutes = () => {
     return useRoutes([
-        { path: '/', element: <Home /> },
-        { path: '/produtos', element: <Menu />, children: [
-            { path: '', element: <ViewMenu />},
-            { path: 'category', element: <Category />, children: [
-                { path: '', element: <ViewCategory /> },
-                { path: 'add', element: <AddCategory /> },
-                { path: 'add/:id', element: <AddCategory /> }
-            ] },
-            { path: 'item', element: <Item />, children: [
-                { path: '', element: <ViewItem />},
-                { path: 'add', element: <AddItem /> },
-                { path: 'add/:id', element: <AddItem /> }
-            ] }
+        /* public routes */
+        { path: '/', element: <SignIn /> },
+        { path: '/signup', element: <SignUp />, children: [
+            { path: '', element: <Responsible />},
+            { path: 'company-data', element: <CompanyData /> },
+            { path: 'address-data', element: <AddressData /> },
+            { path: 'subscription-info', element: <SubscriptionInfo /> },
         ]},
-        { path: '/pedidos', element: <Requests />, children: [
-            { path: 'view/:id', element: <ViewRequest /> }
+        /* protected routes */
+        { path: '/', element: <RequireAuth />, children: [
+            { path: '', element: <Home /> },
+            { path: '/produtos', element: <Menu />, children: [
+                { path: '', element: <ViewMenu />},
+                { path: 'category', element: <Category />, children: [
+                    { path: '', element: <ViewCategory /> },
+                    { path: 'add', element: <AddCategory /> },
+                    { path: 'add/:id', element: <AddCategory /> }
+                ] },
+                { path: 'item', element: <Item />, children: [
+                    { path: '', element: <ViewItem />},
+                    { path: 'add', element: <AddItem /> },
+                    { path: 'add/:id', element: <AddItem /> }
+                ] }
+            ]},
+            { path: '/pedidos', element: <Requests />, children: [
+                { path: 'view/:id', element: <ViewRequest /> }
+            ]},
+            { path: '/perfil', element: <Perfil />, children: [
+                { path: '', element: <Shop /> },
+                { path: 'address', element: <Address /> }
+            ]},
+            { path: '/historico', element: <HistoricRequests />, children: [
+                { path: '', element: <ViewHistoricRequests /> }
+            ]},
+            { path: 'subscription-data/:clientSecret', element: <Subscription /> },
+            { path: 'subscription-status', element: <SubscriptionStatus /> },
+            { path: '/subscription-renew' }
         ]},
-        { path: '/perfil', element: <Perfil />, children: [
-            { path: '', element: <Shop /> },
-            { path: 'address', element: <Address /> }
+        
+        /*{ path: '/produtos', element: <RequireAuth />, children: [
+            { path: '', element: <Menu />, children: [
+                { path: '', element: <ViewMenu />},
+                { path: 'category', element: <Category />, children: [
+                    { path: '', element: <ViewCategory /> },
+                    { path: 'add', element: <AddCategory /> },
+                    { path: 'add/:id', element: <AddCategory /> }
+                ] },
+                { path: 'item', element: <Item />, children: [
+                    { path: '', element: <ViewItem />},
+                    { path: 'add', element: <AddItem /> },
+                    { path: 'add/:id', element: <AddItem /> }
+                ]}
+            ]}
+        ]},*/
+        /*{ path: '/pedidos', element: <RequireAuth />, children: [
+            { path: '', element: <Requests />, children: [
+                { path: 'view/:id', element: <ViewRequest /> }
+            ]}
+        ]},*/
+        /*{ path: '/perfil', element: <RequireAuth />, children: [
+            { path: '', element: <Perfil />, children: [
+                { path: '', element: <Shop /> },
+                { path: 'address', element: <Address /> }
+            ]}
         ]},
-        { path: '/historico', element: <HistoricRequests />, children: [
-            { path: '', element: <ViewHistoricRequests /> }
-        ]}
+        { path: '/historico', element: <RequireAuth />, children: [
+            { path: '', element: <HistoricRequests />, children: [
+                { path: '', element: <ViewHistoricRequests /> }
+            ]},
+        ]},*/
     ]);
 };

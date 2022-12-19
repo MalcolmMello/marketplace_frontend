@@ -2,10 +2,12 @@ import * as C from './styles';
 import { useElements, useStripe } from '@stripe/react-stripe-js';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FormActions, useAuth } from '../../../contexts/AuthProvider';
 
 export const SubscriptionStatus = () => {
     const stripe = useStripe();
     const elements = useElements();
+    const { state, dispatch } =  useAuth();
 
     const [message, setMessage] = useState<string | null>(null);
     const [link, setLink] = useState('');
@@ -34,6 +36,10 @@ export const SubscriptionStatus = () => {
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
+                    dispatch({
+                        type: FormActions.setSubsStatus,
+                        payload: "active"
+                    })
                     setLink('/');
                 break;
                 case "processing":

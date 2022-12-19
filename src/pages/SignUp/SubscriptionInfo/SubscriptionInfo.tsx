@@ -2,12 +2,13 @@ import * as C from './styles';
 import axios from 'axios';
 import { useAppSelector } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { FormActions, useAuth } from '../../../contexts/AuthProvider';
 
 const baseURL = 'http://localhost:5000';
 
 export const SubscriptionInfo = () => {
     const form = useAppSelector((state) => state.form);
-
+    const { state, dispatch } =  useAuth();
     const navigate = useNavigate();
     
     const handleCreateAccount = async () => {
@@ -15,8 +16,14 @@ export const SubscriptionInfo = () => {
 
         try {
             const { data } = await axios.post(`${baseURL}/companies/signup`, body);
-            localStorage.setItem('token', data.token);
+            
+            dispatch({
+                type: FormActions.setSubsStatus,
+                payload: data.token
+            });
+
             navigate(`/subscription-data/${data.clientSecret}`);   
+
         } catch (error) {
             console.log(error);
         }
@@ -37,7 +44,7 @@ export const SubscriptionInfo = () => {
                                 <h1>R$ 100</h1>
                                 <div className='text'>Por mês</div>
                             </div>
-                            <button onClick={handleCreateAccount}>Concluir Cadastro</button>
+                            <button onClick={handleCreateAccount}>'Concluir Pagamento'</button>
                         </div>
                     </div>
                     <div className='bottom--area--second'>
