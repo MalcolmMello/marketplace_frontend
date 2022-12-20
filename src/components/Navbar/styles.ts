@@ -77,4 +77,8 @@ export const Navbar = styled.header`
             }
         }
     }
-`
+`;
+
+export const Layout = styled.div`
+    display: flex;
+`;

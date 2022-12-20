@@ -18,8 +18,18 @@ export const SubscriptionInfo = () => {
             const { data } = await axios.post(`${baseURL}/companies/signup`, body);
             
             dispatch({
-                type: FormActions.setSubsStatus,
+                type: FormActions.setToken,
                 payload: data.token
+            });
+
+            dispatch({
+                type: FormActions.setSubsStatus,
+                payload: data.subscription_status
+            });
+
+            dispatch({
+                type: FormActions.setOnboarding,
+                payload: data.onboarding
             });
 
             navigate(`/subscription-data/${data.clientSecret}`);   

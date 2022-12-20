@@ -39,7 +39,7 @@ export const SubscriptionStatus = () => {
                     dispatch({
                         type: FormActions.setSubsStatus,
                         payload: "active"
-                    })
+                    });
                     setLink('/');
                 break;
                 case "processing":

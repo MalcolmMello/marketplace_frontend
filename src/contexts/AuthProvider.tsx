@@ -7,7 +7,8 @@ type Props = {
 interface State {
     token: string | null,
     onboarding: boolean,
-    subscription_status: "incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null | undefined
+    subscription_status: "incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null | undefined;
+    responsible_companies: string[] 
 };
 
 type Action = {
@@ -24,14 +25,16 @@ type ContextType = {
 export enum FormActions {
     setToken,
     setOnboarding,
-    setSubsStatus
+    setSubsStatus,
+    setCompanies
 };
 
 
 const initialData: State = {
-    token: null,
+    token: "",
     onboarding: false,
-    subscription_status: undefined
+    subscription_status: "active",
+    responsible_companies: []
 };
 
 const formReducer = (state: State, action: Action) => {
@@ -42,6 +45,8 @@ const formReducer = (state: State, action: Action) => {
             return {...state, onboarding: action.payload}
         case FormActions.setSubsStatus:
             return{...state, subscription_status: action.payload}
+        case FormActions.setCompanies:
+            return{...state}
         default:
             return state;
     }

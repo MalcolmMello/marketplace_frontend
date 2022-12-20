@@ -3,9 +3,7 @@ import { MenuRoutes } from './routes/MenuRoutes';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { getPerfilData } from "./redux/slicePerfil";
-import { useEffect, useState } from "react";
-import { isLogged } from "./helpers/isLogged";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(
@@ -25,7 +23,6 @@ function App() {
         <div className="App">
             <Elements stripe={stripePromise}>
                     <>
-                        <Navbar />
                         <MenuRoutes />  
                     </> 
             </Elements> 
