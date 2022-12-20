@@ -1,14 +1,14 @@
 import * as C from './styles';
 import axios from 'axios';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
-import { FormActions, useAuth } from '../../../contexts/AuthProvider';
+import { setOnboarding, setSubscriptionStatus, setToken } from '../../../redux/responsibleSlice';
 
 const baseURL = 'http://localhost:5000';
 
 export const SubscriptionInfo = () => {
     const form = useAppSelector((state) => state.form);
-    const { state, dispatch } =  useAuth();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
     const handleCreateAccount = async () => {
@@ -17,20 +17,9 @@ export const SubscriptionInfo = () => {
         try {
             const { data } = await axios.post(`${baseURL}/companies/signup`, body);
             
-            dispatch({
-                type: FormActions.setToken,
-                payload: data.token
-            });
-
-            dispatch({
-                type: FormActions.setSubsStatus,
-                payload: data.subscription_status
-            });
-
-            dispatch({
-                type: FormActions.setOnboarding,
-                payload: data.onboarding
-            });
+            dispatch(setToken(data.token));
+            dispatch(setSubscriptionStatus(data.subscription_status));
+            dispatch(setOnboarding(data.onboarding));
 
             navigate(`/subscription-data/${data.clientSecret}`);   
 

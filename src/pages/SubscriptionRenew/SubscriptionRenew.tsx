@@ -1,14 +1,16 @@
 import * as C from './styles';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FormActions, useAuth } from '../../contexts/AuthProvider';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setSubscriptionStatus } from '../../redux/responsibleSlice';
 
 const baseURL = 'http://localhost:5000';
 
 const priceId = 'price_1M17nWJvzkzf4DAW3HTLZQPW';
 
 export const SubscriptionRenew = () => {
-    const { state, dispatch } =  useAuth();
+    const state = useAppSelector((state) => state.responsible);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const handleRenewSubscription = async () => {
@@ -21,10 +23,7 @@ export const SubscriptionRenew = () => {
             'Authorization' : `Bearer ${state.token}`,
           }});
 
-          dispatch({
-            type: FormActions.setSubsStatus,
-            payload: data.subscription_status
-          });
+          dispatch(setSubscriptionStatus(data.subscription_status));
 
           navigate(`/subscription-data/${data.clientSecret}`); 
         } catch (error) {

@@ -1,12 +1,12 @@
 import * as C from './styles';
-import axios from 'axios';
 import logo from '../../assets/logopink.svg';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z, string } from 'zod';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FormActions, useAuth } from '../../contexts/AuthProvider';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { signinResponsible } from '../../redux/responsibleSlice';
 
 const baseURL = 'http://localhost:5000';
 
@@ -22,7 +22,8 @@ const schema = z.object({
 
 export const SignIn = () => {
     const [authError, setAuthError] = useState(false);
-    const { state, dispatch } =  useAuth();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     
     const { register, handleSubmit, formState: {errors} } = useForm<IFormInputs>({
@@ -30,24 +31,9 @@ export const SignIn = () => {
     });
 
     const onSubmit = async (login: IFormInputs) => {
-        
         try {
-            const body = {
-                email: login.email,
-                password: login.password
-            };
-            
-            const { data } = await axios.post(`${baseURL}`, body);
-
-            dispatch({
-                type: FormActions.setToken,
-                payload: data.token
-            });
-
-            dispatch({
-                type: FormActions.setSubsStatus,
-                payload: data.subscription_status
-            });
+            const result = await dispatch(signinResponsible({ email: login.email, password: login.password })).unwrap();
+            navigate('/');
         } catch (error) {
             setAuthError(true);
         }

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { useLocation, Navigate, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthProvider';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 
 const RequireAuth = () => {
-    const { state } =  useAuth();
+    const state = useAppSelector((state) => state.responsible);
     const navigate = useNavigate();
 
     const retrieveSubscription = async () => {
@@ -22,8 +22,7 @@ const RequireAuth = () => {
         state.subscription_status === "active" && state.onboarding === true
             ? <Outlet /> : state.subscription_status === "past_due" || state.subscription_status === "incomplete"
             ? <>{retrieveSubscription()}</> : state.subscription_status !== undefined && state.subscription_status !== "active"
-            ? <Navigate to="/subscription-renew" /> : state.onboarding === false 
-            ? <>Onboarding process</>  : state.token !== null
+            ? <Navigate to="/subscription-renew" /> : state.token !== null
             ? <Navigate to="/unauthrozied" /> : <Navigate to="/signin" />
             
     );

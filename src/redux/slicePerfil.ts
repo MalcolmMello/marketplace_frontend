@@ -15,7 +15,6 @@ type Response = {
     phone_number: string,
     logo: string,
     cover: string,
-    subscription_status: string
 }
 
 type AddressResponse = {
