@@ -42,7 +42,7 @@ export const CompanyData = () => {
     return (
         <C.Responsible>
             <section className='container'>
-                <h1>Dados do Responsável pela Loja</h1>
+                <h1>Dados da Loja</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='input--area'>
                         <label>Nome da Empresa (Razão social)</label>

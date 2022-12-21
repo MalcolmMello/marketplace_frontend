@@ -3,7 +3,7 @@ import logo from '../../assets/logopink.svg';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z, string } from 'zod';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { signinResponsible } from '../../redux/responsibleSlice';

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import logodefault from '../../assets/camera.png';
 import { useEffect } from 'react';
 import { fetchCategories } from '../../redux/sliceCategories';
-import { getAddress } from '../../redux/slicePerfil';
+import { getAddress, getPerfilData } from '../../redux/slicePerfil';
 
 export const Navbar = () => {
     const { perfil, loading, error } = useAppSelector((state) => state.perfil);  
@@ -15,18 +15,11 @@ export const Navbar = () => {
 
     const navigate = useNavigate();
 
-    /*useEffect(() => {
-        if(isLogged()) {
-            getCompanyData();
-        } else {
-            navigate('/');
-        }
-    }, [dispatch])
-
-    const getCompanyData = () => {
+    useEffect(() => {
+        dispatch(getPerfilData());
         dispatch(fetchCategories());
         dispatch(getAddress());
-    } */
+    }, [dispatch]);
     
     return (
         <C.Layout>

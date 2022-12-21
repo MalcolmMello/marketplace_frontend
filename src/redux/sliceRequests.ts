@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { token } from '../helpers/token';
+import { setLogOut } from './responsibleSlice';
+import responsibleState from './useAppSelectorHook';
+const { token, current_company_id } = responsibleState();
 
 const baseURL = 'http://localhost:5000/companies';
 
@@ -62,8 +64,11 @@ const INITIAL_STATE = {
 /* requisições */
 export const getRequests = createAsyncThunk('getrequest/companies', async (arg, thunkAPI) => {
     try {
-        const response = await axios.get(baseURL+'/request', { headers });
-        if(response.status !== 200) {
+        const response = await axios.get(`${baseURL}/${current_company_id}/request`, { headers });
+        
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error();
         } else {
             let { data } = response;
@@ -77,10 +82,15 @@ export const getRequests = createAsyncThunk('getrequest/companies', async (arg, 
 export const changeRequestStatus = createAsyncThunk('changestatus/companies',async ({status_name, id}: ChangeStatus, thunkAPI) => {
     try {
         const body = {
-            status_name
+            status_name,
+            companyId: current_company_id
         };
+
         const response = await axios.put(`${baseURL}/changerequeststatus/${id}`, body, { headers } );
-        if(response.status !== 200) {
+        
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error();
         } else {
             let { data } = response;

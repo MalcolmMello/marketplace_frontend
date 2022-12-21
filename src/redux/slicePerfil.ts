@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { token } from '../helpers/token';
-
+import { setLogOut } from './responsibleSlice';
+import { useAppSelector } from '../hooks';
+const { token, current_company_id } = useAppSelector((state) => state.responsible);
 
 const baseURL = 'http://localhost:5000/companies';
 
@@ -51,8 +52,10 @@ const INITIAL_STATE = {
 
 export const getPerfilData = createAsyncThunk("getperfil/companies", async (arg, thunkAPI) => {
     try {
-        const response = await axios.get(baseURL+'/perfil', { headers });
-        if(response.status !== 200) {
+        const response = await axios.get(`${baseURL}/${current_company_id}/perfil`, { headers });
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error();
         } else {
             let { data } = response;
@@ -65,8 +68,10 @@ export const getPerfilData = createAsyncThunk("getperfil/companies", async (arg,
 
 export const getAddress = createAsyncThunk("getaddress/companies", async (arg, thunkAPI) => {
     try {
-        const response = await axios.get(baseURL+'/address', { headers });
-        if(response.status !== 200) {
+        const response = await axios.get(`${baseURL}/${current_company_id}/address`, { headers });
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error();
         } else {
             let { data } = response;
@@ -79,8 +84,11 @@ export const getAddress = createAsyncThunk("getaddress/companies", async (arg, t
 
 export const editPerfil = createAsyncThunk('editcompanies/perfil', async (formData: FormData, thunkAPI) => {
     try {
+        formData.append('companyId', current_company_id as string);
         const response = await axios.post(baseURL+'/perfil', formData, { headers: headers });
-        if(response.status !== 200) {
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error()
         } else {
             let newPerfilData = response.data;
@@ -95,7 +103,9 @@ export const editAddress = createAsyncThunk('editaddress/address', async (data: 
     try {
         const body = data;
         const response = await axios.put(baseURL+'/updateaddress', body, { headers: headers });
-        if(response.status !== 200) {
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error()
         } else {
             let { data } = response;

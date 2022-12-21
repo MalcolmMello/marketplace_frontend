@@ -1,8 +1,7 @@
 import * as C from './styles';
-import axios from 'axios';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
-import { setOnboarding, setSubscriptionStatus, setToken } from '../../../redux/responsibleSlice';
+import { signupResponsible } from '../../../redux/responsibleSlice';
 
 const baseURL = 'http://localhost:5000';
 
@@ -14,15 +13,10 @@ export const SubscriptionInfo = () => {
     const handleCreateAccount = async () => {
         const body = {...form.address_data, ...form.company_data, ...form.responsible_data}
 
+
         try {
-            const { data } = await axios.post(`${baseURL}/companies/signup`, body);
-            
-            dispatch(setToken(data.token));
-            dispatch(setSubscriptionStatus(data.subscription_status));
-            dispatch(setOnboarding(data.onboarding));
-
-            navigate(`/subscription-data/${data.clientSecret}`);   
-
+            const result = await dispatch(signupResponsible(body)).unwrap();
+            navigate('/');
         } catch (error) {
             console.log(error);
         }

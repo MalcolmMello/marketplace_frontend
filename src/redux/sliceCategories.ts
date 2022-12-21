@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { token } from '../helpers/token';
+import { setLogOut } from './responsibleSlice';
+import { useAppSelector } from '../hooks';
 
 const baseURL = 'http://localhost:5000';
+const { token, current_company_id } = useAppSelector((state) => state.responsible); 
 
 const headers = { 
     'Authorization' : `Bearer ${token}`,
@@ -98,9 +100,12 @@ const INITIAL_STATE: Categories = {
 
 export const fetchCategories = createAsyncThunk('companies/category', async (arg, thunkAPI) => {
     try {
-        const response = await axios.get(baseURL+'/companies/category', { headers: headers});
+        const companyId = current_company_id;
+        const response = await axios.get(`${baseURL}/companies/${companyId}/category`, { headers: headers});
         
-        if(response.status !== 200) {
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error();
         } else {
             let categories = response.data;
@@ -113,9 +118,11 @@ export const fetchCategories = createAsyncThunk('companies/category', async (arg
 
 export const postCategory = createAsyncThunk('addcompanies/category', async (category: string, thunkAPI) => {
     try {
-        const body = { category: category };
-        const response = await axios.post(baseURL+'/companies/category', body, { headers: headers });
-        if(response.status !== 200) {
+        const body = { category: category, companyId: current_company_id };
+        const response = await axios.post(`${baseURL}/companies/category`, body, { headers: headers });
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error()
         } else {
             let newCategory = response.data;
@@ -128,8 +135,11 @@ export const postCategory = createAsyncThunk('addcompanies/category', async (cat
 
 export const postProduct = createAsyncThunk('addcompanies/product', async (formData: FormData, thunkAPI) => {
     try {
-        const response = await axios.post(baseURL+'/companies/product', formData, { headers: headers });
-        if(response.status !== 200) {
+        formData.append('companyId', current_company_id as string);
+        const response = await axios.post(`${baseURL}/companies/product`, formData, { headers: headers });
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error()
         } else {
             let newProduct = response.data;
@@ -143,8 +153,11 @@ export const postProduct = createAsyncThunk('addcompanies/product', async (formD
 
 export const editProduct = createAsyncThunk('editcompanies/editproduct', async ({formData, id}: editProduct, thunkAPI) => {
     try {
-        const response = await axios.put(baseURL+`/companies/product/${id}`, formData, { headers: headers });
-        if(response.status !== 200) {
+        formData.append('companyId', current_company_id as string);
+        const response = await axios.put(`${baseURL}/companies/product/${id}`, formData, { headers: headers });
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error()
         } else {
             let editProduct = response.data;
@@ -158,10 +171,14 @@ export const editProduct = createAsyncThunk('editcompanies/editproduct', async (
 export const editCategory = createAsyncThunk('editcompanies/category', async ({id, new_category_name}: UpdateCategory, thunkAPI) => {
     try {
         const body = {
-            new_category_name
+            new_category_name,
+            companyId: current_company_id
         };
-        const response = await axios.put(baseURL+`/companies/category/${id}`, body, { headers });
-        if(response.status !== 200) {
+        
+        const response = await axios.put(`${baseURL}/companies/category/${id}`, body, { headers });
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
             return new Error()
         } else {
             let existCategory = response.data;
