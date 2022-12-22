@@ -73,7 +73,7 @@ export const SubscriptionStatus = () => {
             {message &&
                 <>
                     <div>{message}</div>
-                    <Link to={`${link}`}></Link>
+                    <Link to={`${link}`}>voltar</Link>
                 </>
             }
         </C.SubscriptionStatus>

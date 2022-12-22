@@ -67,9 +67,10 @@ export const MenuRoutes = () => {
                     { path: '', element: <ViewHistoricRequests /> }
                 ]},
             ]},
-            { path: 'subscription-status', element: <SubscriptionStatus /> },
+            
             { path: '/subscription-renew', element: <SubscriptionRenew /> },
         ]},
         { path: 'subscription-data/:clientSecret', element: <Subscription /> },
+        { path: 'subscription-status', element: <SubscriptionStatus /> },
     ]);
 };
