@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { setLogOut } from '../../redux/responsibleSlice';
 
 const RequireAuth = () => {
     const state = useAppSelector((state) => state.responsible);
@@ -8,9 +9,13 @@ const RequireAuth = () => {
 
     const retrieveSubscription = async () => {
         try {
-            const { data } = await axios.get('http://localhost:3000/companies/subscription-status', {headers: { 
+            const { data, status } = await axios.get('http://localhost:5000/companies/subscription-status', {headers: { 
                 'Authorization' : `Bearer ${state.token}`,
             }});
+
+            if(status === 403) {
+                return setLogOut();
+            }
 
             navigate(`/subscription-data/${data.clientSecret}`);
         } catch (error) {
@@ -19,11 +24,11 @@ const RequireAuth = () => {
     };
 
     return (
-        state.subscription_status === "active" && state.onboarding === true
+        state.subscription_status === "active"
             ? <Outlet /> : state.subscription_status === "past_due" || state.subscription_status === "incomplete"
-            ? <>{retrieveSubscription()}</> : state.subscription_status !== undefined && state.subscription_status !== "active"
-            ? <Navigate to="/subscription-renew" /> : state.token !== null
-            ? <Navigate to="/unauthrozied" /> : <Navigate to="/signin" />
+            ? <>{retrieveSubscription()}</> : state.subscription_status !== undefined
+            ? <Navigate to="/subscription-renew" replace /> : state.token !== null
+            ? <Navigate to="/unauthrozied" replace /> : <Navigate to="/signin" replace />
             
     );
 };

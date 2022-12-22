@@ -7,13 +7,16 @@ import { Outlet } from 'react-router-dom';
 import { EM_ABERTO, CONCLUIDO, CANCELADO_PELA_EMPRESA, CANCELADO_PELO_CLIENTE } from '../../constants/status';
 
 export const Requests = () => {
+    const { token, current_company_id } = useAppSelector((state) => state.responsible); 
     const { requests, loading, error } = useAppSelector((state) => state.requests);
     
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(getRequests());
-    }, [dispatch]);
+        if(token && current_company_id) {
+            dispatch(getRequests({ token, companyId: current_company_id }));
+        }
+    }, [dispatch, token, current_company_id]);
 
     return (
         <C.Requests>

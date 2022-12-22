@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { setLogOut } from './responsibleSlice';
-import { useAppSelector } from '../hooks';
-
 const baseURL = 'http://localhost:5000';
-const { token, current_company_id } = useAppSelector((state) => state.responsible); 
 
-const headers = { 
-    'Authorization' : `Bearer ${token}`,
+type Credentials = {
+    token: string,
+    companyId: string,
+    category?: string,
+    formData?: FormData
 };
 
 interface Response {
@@ -38,12 +38,16 @@ interface UpdateCategoryResponse{
 
 interface UpdateCategory {
     id: string,
-    new_category_name: string
+    new_category_name: string,
+    token: string,
+    companyId: string
 };
 
-interface editProduct {
+interface TypeEditProduct {
     formData: FormData,
-    id: string
+    id: string,
+    token: string,
+    companyId: string
 }
 
 interface AddProductResponse {
@@ -98,10 +102,11 @@ const INITIAL_STATE: Categories = {
     error: null
 };
 
-export const fetchCategories = createAsyncThunk('companies/category', async (arg, thunkAPI) => {
+export const fetchCategories = createAsyncThunk('companies/category', async ({ token, companyId }: Credentials, thunkAPI) => {
     try {
-        const companyId = current_company_id;
-        const response = await axios.get(`${baseURL}/companies/${companyId}/category`, { headers: headers});
+        const response = await axios.get(`${baseURL}/companies/${companyId}/category`, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         
         if(response.status === 403) {
             setLogOut();
@@ -116,10 +121,12 @@ export const fetchCategories = createAsyncThunk('companies/category', async (arg
     }
 });
 
-export const postCategory = createAsyncThunk('addcompanies/category', async (category: string, thunkAPI) => {
+export const postCategory = createAsyncThunk('addcompanies/category', async ({ token, companyId, category }: Credentials, thunkAPI) => {
     try {
-        const body = { category: category, companyId: current_company_id };
-        const response = await axios.post(`${baseURL}/companies/category`, body, { headers: headers });
+        const body = { category: category, companyId};
+        const response = await axios.post(`${baseURL}/companies/category`, body, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
@@ -133,10 +140,12 @@ export const postCategory = createAsyncThunk('addcompanies/category', async (cat
     }
 });
 
-export const postProduct = createAsyncThunk('addcompanies/product', async (formData: FormData, thunkAPI) => {
+export const postProduct = createAsyncThunk('addcompanies/product', async ({formData, token, companyId}: Credentials, thunkAPI) => {
     try {
-        formData.append('companyId', current_company_id as string);
-        const response = await axios.post(`${baseURL}/companies/product`, formData, { headers: headers });
+        formData && formData.append('companyId', companyId);
+        const response = await axios.post(`${baseURL}/companies/product`, formData, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
@@ -151,31 +160,35 @@ export const postProduct = createAsyncThunk('addcompanies/product', async (formD
 });
 
 
-export const editProduct = createAsyncThunk('editcompanies/editproduct', async ({formData, id}: editProduct, thunkAPI) => {
+export const editProduct = createAsyncThunk('editcompanies/editproduct', async ({formData, id, companyId, token}: TypeEditProduct, thunkAPI) => {
     try {
-        formData.append('companyId', current_company_id as string);
-        const response = await axios.put(`${baseURL}/companies/product/${id}`, formData, { headers: headers });
+        formData.append('companyId', companyId);
+        const response = await axios.put(`${baseURL}/companies/product/${id}`, formData, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
             return new Error()
         } else {
-            let editProduct = response.data;
-            return editProduct;
+            let responseEditProduct = response.data;
+            return responseEditProduct;
         }
     } catch (error: any) {
         return thunkAPI.rejectWithValue(error.response.data);
     }
 });
 
-export const editCategory = createAsyncThunk('editcompanies/category', async ({id, new_category_name}: UpdateCategory, thunkAPI) => {
+export const editCategory = createAsyncThunk('editcompanies/category', async ({id, new_category_name, companyId, token}: UpdateCategory, thunkAPI) => {
     try {
         const body = {
             new_category_name,
-            companyId: current_company_id
+            companyId
         };
         
-        const response = await axios.put(`${baseURL}/companies/category/${id}`, body, { headers });
+        const response = await axios.put(`${baseURL}/companies/category/${id}`, body, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
@@ -232,7 +245,7 @@ const sliceCategories = createSlice({
             })
             .addCase(editCategory.fulfilled, (state, action: PayloadAction<UpdateCategoryResponse>) => {
                 state.loading = false;
-                state.categories.map(item => {
+                state.categories.forEach(item => {
                     if(item.id === action.payload.existCategory.id) item.category_name = action.payload.existCategory.category_name;
                 });
             })
@@ -246,7 +259,7 @@ const sliceCategories = createSlice({
             })
             .addCase(postProduct.fulfilled, (state, action: PayloadAction<AddProductResponse>) => {
                 state.loading = false;
-                state.categories.map(item => { 
+                state.categories.forEach(item => { 
                     if (item.id === action.payload.newProduct.categoryProductId) {
                         item.products?.push({
                             id: action.payload.newProduct.id,
@@ -269,7 +282,7 @@ const sliceCategories = createSlice({
             })
             .addCase(editProduct.fulfilled, (state, action: PayloadAction<EditProductResponse>) => {
                 state.loading = false;
-                state.categories.map(item => item.products.map(product => {
+                state.categories.forEach(item => item.products.forEach(product => {
                     if(product.id === action.payload.existProduct.id) {
                         product.product_name = action.payload.existProduct.product_name;
                         product.description = action.payload.existProduct.description

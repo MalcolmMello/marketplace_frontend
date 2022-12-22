@@ -28,8 +28,7 @@ function App() {
         }
 
         dispatch(setToken(token));
-        navigate('/')
-    }, []);
+    }, [localStorage]);
 
     return (
         <div className="App">

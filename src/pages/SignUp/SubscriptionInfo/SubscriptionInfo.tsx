@@ -16,7 +16,8 @@ export const SubscriptionInfo = () => {
 
         try {
             const result = await dispatch(signupResponsible(body)).unwrap();
-            navigate('/');
+            console.log(result);
+            navigate(`/subscription-data/${result.clientSecret}`);
         } catch (error) {
             console.log(error);
         }

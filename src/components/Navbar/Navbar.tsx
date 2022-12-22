@@ -9,17 +9,19 @@ import { getAddress, getPerfilData } from '../../redux/slicePerfil';
 
 export const Navbar = () => {
     const { perfil, loading, error } = useAppSelector((state) => state.perfil);  
+    const { token, current_company_id } = useAppSelector((state) => state.responsible);  
     const location = useLocation();
     const { pathname } = location;  
     const dispatch = useAppDispatch();
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-        dispatch(getPerfilData());
-        dispatch(fetchCategories());
-        dispatch(getAddress());
-    }, [dispatch]);
+        if(token && current_company_id) {
+            dispatch(getPerfilData({token, companyId: current_company_id}));
+            dispatch(fetchCategories({token, companyId: current_company_id}));
+            dispatch(getAddress({token, companyId: current_company_id}));
+        }
+        
+    }, [dispatch, token, current_company_id]);
     
     return (
         <C.Layout>

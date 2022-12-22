@@ -6,6 +6,7 @@ import { editProduct, postProduct } from '../../../../redux/sliceCategories';
 import { useParams } from 'react-router-dom';
 
 export const AddItem = () => {
+    const { token, current_company_id } = useAppSelector((state) => state.responsible); 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { id } = useParams();
@@ -53,17 +54,21 @@ export const AddItem = () => {
 
         if(id) {
             try {
-                const result = await dispatch(editProduct({ formData, id })).unwrap();
-                navigate('/produtos');
-                setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+                if(token && current_company_id) {
+                    const result = await dispatch(editProduct({ formData, id, token, companyId: current_company_id })).unwrap();
+                    navigate('/produtos');
+                    setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+                }
             } catch (error) {
                 alert(`${error}`);
             }
         } else {
             try {
-                const result = await dispatch(postProduct(formData)).unwrap();
-                navigate('/produtos');
-                setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+                if(token && current_company_id) {
+                    const result = await dispatch(postProduct({formData, token, companyId: current_company_id})).unwrap();
+                    navigate('/produtos');
+                    setPostData({ product_name: '', description: '', categoryProductId: '', price: '' });
+                }
             } catch (error) {
                 alert(`${error}`);
             }

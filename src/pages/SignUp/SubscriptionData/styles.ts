@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Subscription = styled.main`
+    width:100vw;
     .container {
         display: flex;
         flex-direction: column;

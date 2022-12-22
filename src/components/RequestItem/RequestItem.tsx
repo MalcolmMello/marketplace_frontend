@@ -30,13 +30,16 @@ interface RequestItem {
 };
 
 export const RequestItem = ({ id, username, status, total, created_at, address, products, isDelivery }: RequestItem) => {
+    const { token, current_company_id } = useAppSelector((state) => state.responsible);  
     const dispatch = useAppDispatch();
     
     const date = `às ${new Date(created_at).getHours()}:${new Date(created_at).getMinutes()}`;
     
     const handleCalcelRequest = async () => {
         try {
-            const result = await dispatch(changeRequestStatus({ status_name: CANCELADO_PELA_EMPRESA, id })).unwrap();
+            if(token && current_company_id) {
+                const result = await dispatch(changeRequestStatus({ status_name: CANCELADO_PELA_EMPRESA, id, token, companyId: current_company_id })).unwrap();
+            }
         } catch (error) {
             alert(`${error}`);
         };
@@ -44,7 +47,9 @@ export const RequestItem = ({ id, username, status, total, created_at, address, 
 
     const handleConfirmRequest = async () => {
         try {
-            const result = await dispatch(changeRequestStatus({ status_name: EM_PREPARO, id })).unwrap();
+            if(token && current_company_id) {
+                const result = await dispatch(changeRequestStatus({ status_name: EM_PREPARO, id, token, companyId: current_company_id })).unwrap();
+            }
         } catch (error) {
             alert(`${error}`);
         };
@@ -52,7 +57,10 @@ export const RequestItem = ({ id, username, status, total, created_at, address, 
 
     const handleSendRequest = async () => {
         try {
-            const result = await dispatch(changeRequestStatus({ status_name: SAIU_PARA_ENTREGA, id })).unwrap();
+            if(token && current_company_id) {
+                const result = await dispatch(changeRequestStatus({ status_name: SAIU_PARA_ENTREGA, id, token, companyId: current_company_id })).unwrap();
+            }
+            
         } catch (error) {
             alert(`${error}`);
         };
@@ -60,7 +68,9 @@ export const RequestItem = ({ id, username, status, total, created_at, address, 
 
     const handleReadyRequest = async () => {
         try {
-            const result = await dispatch(changeRequestStatus({ status_name: PRONTO_PARA_RETIRADA, id })).unwrap();
+            if(token && current_company_id) {
+                const result = await dispatch(changeRequestStatus({ status_name: PRONTO_PARA_RETIRADA, id, token, companyId: current_company_id })).unwrap();
+            }
         } catch (error) {
             alert(`${error}`);
         };

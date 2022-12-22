@@ -15,6 +15,7 @@ type Address = {
 };
 
 export const Address = () => {
+    const { token, current_company_id } = useAppSelector((state) => state.responsible); 
     const { address, perfil, loading, error } = useAppSelector((state) => state.perfil);  
     
     const [data, setData] = useState({ zip_code: '', street: '', district: '', city: '', state: '', address_number: '' });
@@ -58,9 +59,11 @@ export const Address = () => {
             setDisableCep(false);
         } else {
             try {
-                const result = await dispatch(editAddress(data)).unwrap();
-                setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
-                setDisableCep(false);
+                if(token && current_company_id) {
+                    const result = await dispatch(editAddress({...data, token, companyId: current_company_id})).unwrap();
+                    setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
+                    setDisableCep(false);
+                }
             } catch (error) {
                 alert(`${error}`);
             };

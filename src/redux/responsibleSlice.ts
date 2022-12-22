@@ -63,7 +63,9 @@ export const signinResponsible = createAsyncThunk('companies/signin', async ({pa
         const body = { password, email };
         const response = await axios.post(baseURL+'/companies/signin', body);
         
+        
         if(response.status !== 200) {
+            console.log(response)
             return new Error()
         } else {
             let auth = response.data;

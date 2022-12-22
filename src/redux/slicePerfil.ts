@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { setLogOut } from './responsibleSlice';
-import { useAppSelector } from '../hooks';
-const { token, current_company_id } = useAppSelector((state) => state.responsible);
 
 const baseURL = 'http://localhost:5000/companies';
 
-const headers = { 
-    'Authorization' : `Bearer ${token}`,
+type Credentials = {
+    token: string,
+    companyId: string,
+    formData?: FormData
 };
 
 type Response = {
@@ -34,7 +34,9 @@ type AddressData = {
     city: string;
     state: string;
     address_number: string;
-}
+    token: string,
+    companyId: string
+};
 
 interface Perfil {
     perfil: Response,
@@ -50,9 +52,11 @@ const INITIAL_STATE = {
     error: null
 } as Perfil;
 
-export const getPerfilData = createAsyncThunk("getperfil/companies", async (arg, thunkAPI) => {
+export const getPerfilData = createAsyncThunk("getperfil/companies", async ({ token, companyId }: Credentials, thunkAPI) => {
     try {
-        const response = await axios.get(`${baseURL}/${current_company_id}/perfil`, { headers });
+        const response = await axios.get(`${baseURL}/${companyId}/perfil`, { headers: { 
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
@@ -66,9 +70,11 @@ export const getPerfilData = createAsyncThunk("getperfil/companies", async (arg,
     }
 });
 
-export const getAddress = createAsyncThunk("getaddress/companies", async (arg, thunkAPI) => {
+export const getAddress = createAsyncThunk("getaddress/companies", async ({ token, companyId }: Credentials, thunkAPI) => {
     try {
-        const response = await axios.get(`${baseURL}/${current_company_id}/address`, { headers });
+        const response = await axios.get(`${baseURL}/${companyId}/address`, { headers: { 
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
@@ -82,10 +88,12 @@ export const getAddress = createAsyncThunk("getaddress/companies", async (arg, t
     }
 });
 
-export const editPerfil = createAsyncThunk('editcompanies/perfil', async (formData: FormData, thunkAPI) => {
+export const editPerfil = createAsyncThunk('editcompanies/perfil', async ({formData, token, companyId}: Credentials, thunkAPI) => {
     try {
-        formData.append('companyId', current_company_id as string);
-        const response = await axios.post(baseURL+'/perfil', formData, { headers: headers });
+        formData && formData.append('companyId', companyId as string);
+        const response = await axios.post(baseURL+'/perfil', formData, { headers: { 
+            'Authorization' : `Bearer ${token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {
@@ -102,7 +110,9 @@ export const editPerfil = createAsyncThunk('editcompanies/perfil', async (formDa
 export const editAddress = createAsyncThunk('editaddress/address', async (data: AddressData, thunkAPI) => {
     try {
         const body = data;
-        const response = await axios.put(baseURL+'/updateaddress', body, { headers: headers });
+        const response = await axios.put(baseURL+'/updateaddress', body, { headers: { 
+            'Authorization' : `Bearer ${data.token}`,
+        }});
         if(response.status === 403) {
             setLogOut();
         } else if(response.status !== 200) {

@@ -1,10 +1,11 @@
 import * as C from './styles';
 import { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import logodefault from '../../../assets/camera.png'
+import logodefault from '../../../assets/camera.png';
 import { editPerfil } from '../../../redux/slicePerfil';
 
 export const Shop = () => {
+    const { token, current_company_id } = useAppSelector((state) => state.responsible); 
     const { perfil, loading, error } = useAppSelector((state) => state.perfil);  
 
     const dispatch = useAppDispatch();
@@ -49,8 +50,10 @@ export const Shop = () => {
         };
 
         try {
-            const result = await dispatch(editPerfil(formData)).unwrap();
-            setNewPerfil({ company_name: '', description: '', phone_number: '' });
+            if(token && current_company_id) {
+                const result = await dispatch(editPerfil({formData, token, companyId: current_company_id})).unwrap();
+                setNewPerfil({ company_name: '', description: '', phone_number: '' });
+            }
         } catch (error) {
             alert(`${error}`);
         };

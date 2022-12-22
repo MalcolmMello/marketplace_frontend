@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks';
 import { useParams } from 'react-router-dom';
 
 export const AddCategory = () => {
+    const { token, current_company_id } = useAppSelector((state) => state.responsible);  
     const { categories, loading, error } = useAppSelector((state) => state.categories);
     const dispatch = useAppDispatch();
     const { id } = useParams();
@@ -23,8 +24,11 @@ export const AddCategory = () => {
         e.preventDefault();
         if(id) {
             try {
-                const result = await dispatch(editCategory({ id, new_category_name: category })).unwrap();
-                cleanForm();
+                if(token && current_company_id) {
+                    const result = await dispatch(editCategory({ id, new_category_name: category, token, companyId: current_company_id })).unwrap();
+                    cleanForm();
+                }
+                
             } catch (error) {
                 console.log(error)
                 alert(`${error}`)
@@ -32,8 +36,11 @@ export const AddCategory = () => {
             };            
         } else {
             try {
-                const result = await dispatch(postCategory(category)).unwrap();
-                cleanForm();
+                if(token && current_company_id) {
+                    const result = await dispatch(postCategory({category, token, companyId: current_company_id})).unwrap();
+                    cleanForm();
+                }
+                
             } catch (error) {
                 alert(`${error}`)
                 cleanForm();

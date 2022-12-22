@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { setLogOut } from './responsibleSlice';
-import responsibleState from './useAppSelectorHook';
-const { token, current_company_id } = responsibleState();
 
 const baseURL = 'http://localhost:5000/companies';
 
-const headers = { 
-    'Authorization' : `Bearer ${token}`,
+type Credentials = {
+    token: string,
+    companyId: string
 };
 
 type Request = {
@@ -40,7 +39,9 @@ type Request = {
 
 interface ChangeStatus {
     status_name: string,
-    id: string
+    id: string,
+    token: string,
+    companyId: string
 };
 
 interface ChangedRequest {
@@ -48,6 +49,8 @@ interface ChangedRequest {
     status: {
         status_name: string
     },
+    token: string,
+    companyId: string
 };
 
 interface State {
@@ -62,9 +65,11 @@ const INITIAL_STATE = {
     error: null
 } as State;
 /* requisições */
-export const getRequests = createAsyncThunk('getrequest/companies', async (arg, thunkAPI) => {
+export const getRequests = createAsyncThunk('getrequest/companies', async ({token, companyId}: Credentials, thunkAPI) => {
     try {
-        const response = await axios.get(`${baseURL}/${current_company_id}/request`, { headers });
+        const response = await axios.get(`${baseURL}/${companyId}/request`, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         
         if(response.status === 403) {
             setLogOut();
@@ -79,14 +84,16 @@ export const getRequests = createAsyncThunk('getrequest/companies', async (arg, 
     }
 });
 
-export const changeRequestStatus = createAsyncThunk('changestatus/companies',async ({status_name, id}: ChangeStatus, thunkAPI) => {
+export const changeRequestStatus = createAsyncThunk('changestatus/companies',async ({status_name, id, token, companyId}: ChangeStatus, thunkAPI) => {
     try {
         const body = {
             status_name,
-            companyId: current_company_id
+            companyId
         };
 
-        const response = await axios.put(`${baseURL}/changerequeststatus/${id}`, body, { headers } );
+        const response = await axios.put(`${baseURL}/changerequeststatus/${id}`, body, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
         
         if(response.status === 403) {
             setLogOut();
@@ -129,7 +136,7 @@ const sliceRequests = createSlice({
             })
             .addCase(changeRequestStatus.fulfilled, (state, action: PayloadAction<ChangedRequest>) => {
                 state.loading = false;
-                state.requests.map(item => {
+                state.requests.forEach(item => {
                     if(item.request_id === action.payload.requestId) {
                         item.status.status_name = action.payload.status.status_name;
                     }
