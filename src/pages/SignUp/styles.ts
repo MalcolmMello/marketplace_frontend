@@ -17,7 +17,7 @@ export const SignUp = styled.div<{percent: number}>`
         height: 2px;
         transtion: all ease 0.2s;
         width: ${props => props.percent}%;
-        color: #FF175B;
-        background-color: #FF175B;
+        color: var(--pink);
+        background-color: var(--pink);
     }
 `

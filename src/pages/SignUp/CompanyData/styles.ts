@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Responsible = styled.main`
     h1 {
-        color: #FF175B
+        color: var(--pink)
     }
     .container {
         max-width: 728px;
@@ -23,13 +23,13 @@ export const Responsible = styled.main`
         input {
             height: 40px;
             border-radius: 12px;
-            border: 1px solid #FF175B;
+            border: 1px solid var(--pink);
             padding: 7px;
             font-size: 17px;
         }
 
         input:focus {
-            outline: 1px solid #FF175B;
+            outline: 1px solid var(--pink);
         }
 
         .input--area {
@@ -49,13 +49,13 @@ export const Responsible = styled.main`
                 height: 130px;
                 border-radius: 12px;
                 resize: none;
-                border: 1px solid #FF175B;
+                border: 1px solid var(--pink);
                 padding: 7px;
                 font-size: 17px;
             }
 
             textarea:focus {
-                outline: 1px solid #FF175B;
+                outline: 1px solid var(--pink);
             }
         }
 
@@ -67,7 +67,7 @@ export const Responsible = styled.main`
             button {
                 width: 100%;
                 height: 49px;
-                background-color: #C11849;
+                background-color: var(--pink);
                 border: none;
                 border-radius: 10px;
                 color: #FFF;

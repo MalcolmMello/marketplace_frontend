@@ -225,6 +225,9 @@ const sliceCategories = createSlice({
             })
             .addCase(fetchCategories.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload.message;
             })
             .addCase(postCategory.pending, (state) => {
@@ -237,6 +240,9 @@ const sliceCategories = createSlice({
             })
             .addCase(postCategory.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload;
             })
             .addCase(editCategory.pending, (state) => {
@@ -251,6 +257,9 @@ const sliceCategories = createSlice({
             })
             .addCase(editCategory.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload;
             })
             .addCase(postProduct.pending, (state) => {
@@ -274,6 +283,9 @@ const sliceCategories = createSlice({
             })
             .addCase(postProduct.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload;
             })
             .addCase(editProduct.pending, (state) => {
@@ -294,6 +306,9 @@ const sliceCategories = createSlice({
             })
             .addCase(editProduct.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload;
             })
     },

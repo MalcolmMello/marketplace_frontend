@@ -92,12 +92,30 @@ export const signupResponsible = createAsyncThunk('companies/signup', async (dat
     }
 });
 
+export const getResponsible = createAsyncThunk('companies/getresponsible', async (token: string, thunkAPI) => {
+    try {
+        const response = await axios.get(`${baseURL}/companies/responsible-data`, { headers: {
+            'Authorization' : `Bearer ${token}`,
+        }});
+        if(response.status === 403 || response.status === 401 ) {
+            setLogOut();
+            return new Error()
+        } else if(response.status !== 200) {
+            return new Error()
+        } else {
+            let auth = response.data;
+            return auth;
+        }
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
 const responsibleSlice = createSlice({
     name: 'responsible',
     initialState: initialState,
     reducers: {
         setToken: (state, action: PayloadAction<string>) => {
-            console.log(action.payload)
             state.token = action.payload;
         },
         setSubscriptionStatus: (state, action: PayloadAction<"incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null>) => {
@@ -109,7 +127,7 @@ const responsibleSlice = createSlice({
         setOnboarding: (state, action: PayloadAction<boolean>) => {
             state.onboarding = action.payload;
         },
-        setLogOut: (state) => {
+        setLogOut: () => {
             localStorage.clear();
             window.location.reload();
         }
@@ -153,6 +171,27 @@ const responsibleSlice = createSlice({
             .addCase(signupResponsible.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = action.payload.message;
+            })
+            .addCase(getResponsible.pending, (state, action) => {
+                state.error = null;
+                state.loading = true;
+            })
+            .addCase(getResponsible.fulfilled, (state, action: PayloadAction<Response>) => {
+                state.error = null;
+                state.subscription_status = action.payload.subscription_status;
+                state.responsible_companies = action.payload.responsible_companies;
+                action.payload.responsible_companies.forEach((item) => {
+                    if(item.isMainCompany) { state.current_company_id = item.id }
+                });
+                state.loading = false;  
+            })
+            .addCase(getResponsible.rejected, (state, action: PayloadAction<any>) => {
+                state.loading = false;
+                if(action.payload?.message === "jwt expired" || action.payload?.message === "Invalid Token") {
+                    state.token = null;
+                    localStorage.clear();
+                }
+                state.error = action.payload?.message;
             })
     }
 });

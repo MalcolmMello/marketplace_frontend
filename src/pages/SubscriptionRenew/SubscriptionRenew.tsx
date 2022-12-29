@@ -6,7 +6,7 @@ import { setSubscriptionStatus } from '../../redux/responsibleSlice';
 
 const baseURL = 'http://localhost:5000';
 
-const priceId = 'price_1M17nWJvzkzf4DAW3HTLZQPW';
+const priceId = process.env.REACT_APP_STRIPE_ID;
 
 export const SubscriptionRenew = () => {
     const state = useAppSelector((state) => state.responsible);
@@ -35,7 +35,7 @@ export const SubscriptionRenew = () => {
         <C.SubscriptionRenew>
             <div className='container'>
                 <section className='top--area'>
-                    <h1>Renove sua parceria com a Windpet</h1>
+                    <h1>Renove sua parceria com a Petland</h1>
                     <p className='text'>Volte a ter acesso a uma plataforma de gestão de pedidos, estoques e gestão financeira por apenas R$ 100,00.</p>
                 </section>
                 <section className='bottom--area'>

@@ -33,7 +33,7 @@ export const RequestItem = styled.div`
             display: flex;
             align-items: center;
             height: 70px;
-            border-bottom: 1px solid #949494;
+            border-bottom: 1px solid var(--gray);
             padding: 10px;
             h4 {
                 margin: 0
@@ -62,7 +62,7 @@ export const RequestItem = styled.div`
             display: flex;
             padding: 10px;
             justify-content: space-between;
-            border-top: 1px solid #949494;
+            border-top: 1px solid var(--gray);
             .title {
                 font-weight: bold
             }
@@ -71,7 +71,7 @@ export const RequestItem = styled.div`
     .bottom--area {
         display: flex;
         justify-content: end;
-        border-top: 1px solid #949494;
+        border-top: 1px solid var(--gray);
         padding-top: 10px;
         .button--area {
             padding: 5px;
@@ -87,11 +87,11 @@ export const RequestItem = styled.div`
             }
             .cancel {
                 background: none;
-                border: 1px solid #660C27;
-                color: #660C27
+                border: 1px solid var(--wine);
+                color: var(--wine)
             }
             .confirm, .send, .ready {
-                background: #660C27;
+                background: var(--wine);
                 color: white
             }
         }

@@ -47,7 +47,7 @@ export const SignIn = styled.main`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #FF175B;
+        background-color: var(--pink);
 
         .right--container {
             display: flex;
@@ -57,7 +57,7 @@ export const SignIn = styled.main`
             width: 70%;
             padding: 5px;
             border-radius: 17px;
-            background-color: #FFF;
+            background-color: var(--white);
             
             form {
                 width: 75%;
@@ -96,7 +96,7 @@ export const SignIn = styled.main`
                 button {
                     width: 100%;
                     height: 49px;
-                    background-color: #FF175B;
+                    background-color: var(--pink);
                     border: none;
                     border-radius: 10px;
                     color: #FFF;

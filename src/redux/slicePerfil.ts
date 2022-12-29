@@ -11,19 +11,20 @@ type Credentials = {
 };
 
 type Response = {
+    company_id: string,
     company_name: string,
+    company_email: string,
     description: string,
     phone_number: string,
+    cnpj: string,
+    subscription_status: string,
+    onboarding: boolean,
     logo: string,
     cover: string,
 }
 
 type AddressResponse = {
-    zip_code: string,
-    street: string,
-    state: string,
-    city: string,
-    district: string,
+    display_name: string,
     number: string
 };
 
@@ -145,6 +146,9 @@ const slicePerfil = createSlice({
             })
             .addCase(getPerfilData.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload.message;
             })
             .addCase(editPerfil.pending, (state, action) => {
@@ -158,6 +162,9 @@ const slicePerfil = createSlice({
             })
             .addCase(editPerfil.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload.message;
             })
             .addCase(getAddress.pending, (state, action) => {
@@ -171,6 +178,9 @@ const slicePerfil = createSlice({
             })
             .addCase(getAddress.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload.message;
             })
             .addCase(editAddress.pending, (state, action) => {
@@ -184,6 +194,9 @@ const slicePerfil = createSlice({
             })
             .addCase(editAddress.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.error = action.payload.message;
             })
     }

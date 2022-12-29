@@ -3,13 +3,13 @@ import styled from "styled-components";
 export const CategoryArea = styled.section`
     border-radius: 15px;
     box-shadow: 0px 0px 30px rgb(227,227,227);
-    color: #660C27;
+    color: var(--wine);
 `;
 
 export const NameCategory = styled.div`
     display: flex;
     background-color: #fff;
-    color: #660C27;
+    color: var(--wine);
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     height: 80px;

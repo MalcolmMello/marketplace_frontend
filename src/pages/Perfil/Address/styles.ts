@@ -9,7 +9,7 @@ export const Address = styled.main`
         font-size: 17px;
         outline: 0;
         border-radius: 5px;
-        border: 1px solid #949494;
+        border: 1px solid var(--gray);
         padding: 3px;
     }
     .input--area {
@@ -49,7 +49,7 @@ export const Address = styled.main`
     button {
         width: 198px;
         height: 49px;
-        background-color: #660C27;
+        background-color: var(--wine);
         border: none;
         border-radius: 10px;
         color: #FFF;

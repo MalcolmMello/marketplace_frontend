@@ -33,7 +33,7 @@ export const CheckoutForm = () => {
             <div>
                 <h1>Plano Mensal</h1>
                 <div className='text'>
-                    Torne-se um parceiro Windpet, tenha acesso a uma plataforma personalizada
+                    Torne-se um parceiro Petland, tenha acesso a uma plataforma personalizada
                     para gerenciar pedidos, movimentação financeira e os produtos que colocar a venda.
                     Além de aumentar o seu número de vendas expondo seu Petshop em um aplicativo focado no mercado Pet.
                 </div>

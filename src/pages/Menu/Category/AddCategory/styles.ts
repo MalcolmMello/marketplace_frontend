@@ -6,7 +6,7 @@ export const AddCategory = styled.form`
     padding: 0px 5px;
     input {
         border: none;
-        border-bottom: 1px solid #660C27;
+        border-bottom: 1px solid var(--wine);
         outline: none;
         background: transparent;
         padding: 10px 2px;
@@ -16,7 +16,7 @@ export const AddCategory = styled.form`
     button {
         width: 100px;
         height: 47px;
-        background-color: #660C27;
+        background-color: var(--wine);
         border: none;
         border-radius: 12px;
         color: #FFF;

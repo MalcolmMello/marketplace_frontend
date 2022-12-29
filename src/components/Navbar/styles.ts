@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Navbar = styled.header`
-    background-color: #A1818A;
+    background-color: var(--darkbeige);
     width: 15vw;
     min-height: 100vh;
     .logo--area {
@@ -81,4 +81,10 @@ export const Navbar = styled.header`
 
 export const Layout = styled.div`
     display: flex;
+    max-width: 100vw;
+
+    button {
+        width: 300px;
+        height: 50px
+    }
 `;

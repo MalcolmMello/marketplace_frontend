@@ -3,9 +3,9 @@ import { MenuRoutes } from './routes/MenuRoutes';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "./redux/responsibleSlice";
+import { getResponsible, setLogOut, setToken } from "./redux/responsibleSlice";
 
 const stripePromise = loadStripe(
     process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string
@@ -13,8 +13,6 @@ const stripePromise = loadStripe(
 
 function App() {
     const state = useAppSelector((state) => state.responsible); 
-
-    const [status, setStatus] = useState("");
     
     const dispatch = useAppDispatch();
 
@@ -22,13 +20,15 @@ function App() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-
+        
         if(!token) {
+            setLogOut();
             return navigate('/signin');
         }
 
         dispatch(setToken(token));
-    }, [localStorage]);
+        dispatch(getResponsible(token));
+    }, []);
 
     return (
         <div className="App">

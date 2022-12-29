@@ -13,12 +13,12 @@ export const Perfil = styled.main`
         }
         p {
             font-weight: bold;
-            color: #949494;
+            color: var(--gray);
             margin: 0px
         }
         button {
             height: 47px;
-            background-color: #660C27;
+            background-color: var(--wine);
             border: none;
             border-radius: 12px;
             color: #FFF;
@@ -42,9 +42,9 @@ export const NestedMenu = styled.section`
         margin: 0;
         .active {
             a {
-                color: #660C27
+                color: var(--wine)
             }
-            border-bottom: 3px solid #660c27
+            border-bottom: 3px solid var(--wine)
         }
         li {
             margin-right: 20px;
@@ -52,7 +52,7 @@ export const NestedMenu = styled.section`
             cursor: pointer;
             height: 65%;
             a {
-                color: #949494;
+                color: var(--gray);
                 font-weight: bold;
                 text-decoration: none;
                 transition: all ease 0.2s;
@@ -60,10 +60,10 @@ export const NestedMenu = styled.section`
             }
         };
         a:hover {
-            color: #660C27
+            color: var(--wine)
         }
         li:hover {
-            border-bottom: 3px solid #660c27
+            border-bottom: 3px solid var(--wine)
         }
     }
 `;
@@ -82,7 +82,7 @@ export const NameCategory = styled.div`
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     height: 80px;
-    border-bottom: 1px solid #949494;
+    border-bottom: 1px solid var(--gray);
     padding: 5px 10px 5px 10px;
     font-weight: bold;
     font-size: 22px
@@ -100,7 +100,7 @@ export const ProductArea = styled.div`
         align-items: center;
         padding: 3px 10px 3px 10px;
         cursor: pointer;
-        border: 1px solid #49081B;
+        border: 1px solid var(--darkwine);
         border-radius: 15px;
         position: absolute;
         bottom: 7px;

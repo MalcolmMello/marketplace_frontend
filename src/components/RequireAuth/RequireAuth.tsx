@@ -13,7 +13,7 @@ const RequireAuth = () => {
                 'Authorization' : `Bearer ${state.token}`,
             }});
 
-            if(status === 403) {
+            if(status === 403 || status === 401) {
                 return setLogOut();
             }
 
@@ -24,11 +24,11 @@ const RequireAuth = () => {
     };
 
     return (
-        state.subscription_status === "active"
-            ? <Outlet /> : state.subscription_status === "past_due" || state.subscription_status === "incomplete"
+        state.subscription_status === "active" && state.token !== null
+            ? <Outlet /> : state.token === null
+            ? <Navigate to="/signin"/> : state.subscription_status === "past_due" || state.subscription_status === "incomplete"
             ? <>{retrieveSubscription()}</> : state.subscription_status !== undefined
-            ? <Navigate to="/subscription-renew" replace /> : state.token !== null
-            ? <Navigate to="/unauthrozied" replace /> : <Navigate to="/signin" replace />
+            ? <Navigate to="/subscription-renew" replace /> : <></>
             
     );
 };

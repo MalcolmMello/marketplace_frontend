@@ -20,7 +20,7 @@ export const Subscription = () => {
     return (
         <C.Subscription>
             <div className='container'> 
-                <h1>Parceiro Windpet</h1>
+                <h1>Parceiro Petland</h1>
                 <div className='content' >
                         <>
                             { clientSecret && stripePromise && (

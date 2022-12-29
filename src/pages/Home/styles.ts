@@ -8,7 +8,7 @@ export const Home = styled.main`
 
 export const Header = styled.header`
     span {
-        color: #949494;
+        color: var(--gray);
         font-size: 12px;
     }
 `;

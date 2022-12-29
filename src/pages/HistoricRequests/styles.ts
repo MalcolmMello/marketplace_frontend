@@ -13,12 +13,12 @@ export const HistoricRequests = styled.main`
         }
         p {
             font-weight: bold;
-            color: #949494;
+            color: var(--gray);
             margin: 0px
         }
         button {
             height: 47px;
-            background-color: #660C27;
+            background-color: var(--wine);
             border: none;
             border-radius: 12px;
             color: #FFF;
@@ -46,7 +46,7 @@ export const NestedMenu = styled.section`
             cursor: pointer;
             height: 65%;
             a {
-                color: #949494;
+                color: var(--gray);
                 font-weight: bold;
                 text-decoration: none;
                 transition: all ease 0.2s;
@@ -54,10 +54,10 @@ export const NestedMenu = styled.section`
             }
         };
         a:hover {
-            color: #660C27
+            color: var(--wine)
         }
         li:hover {
-            border-bottom: 3px solid #660c27
+            border-bottom: 3px solid var(--wine)
         }
     }
 `;

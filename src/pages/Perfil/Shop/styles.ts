@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ShopArea = styled.form`
     border-radius: 15px;
     box-shadow: 0px 0px 30px rgb(227,227,227);
-    color: #660C27;
+    color: var(--wine);
     background-color: #FFF;
     padding: 10px;;
 
@@ -16,7 +16,7 @@ export const ShopArea = styled.form`
         max-width: 50%
     }
     .cover, .cover--img {
-        border: 1px solid #949494;
+        border: 1px solid var(--gray);
         height: 120px;
         border-radius: 5px;
     }
@@ -34,7 +34,7 @@ export const ShopArea = styled.form`
         border-radius: 50%;
     }
     .front, .logo--img {
-        border: 1px solid #949494;
+        border: 1px solid var(--gray);
         height: 100px;
         width: 100px;
         border-radius: 50%;
@@ -62,7 +62,7 @@ export const ShopArea = styled.form`
             margin-top: 20px;
         }
         input, textarea {
-            border: 1px solid #949494;
+            border: 1px solid var(--gray);
             width: 500px;
             border-radius: 10px;
             resize: none;
@@ -79,7 +79,7 @@ export const ShopArea = styled.form`
     button {
         width: 198px;
         height: 49px;
-        background-color: #660C27;
+        background-color: var(--wine);
         border: none;
         border-radius: 10px;
         color: #FFF;

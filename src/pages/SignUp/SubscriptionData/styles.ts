@@ -10,7 +10,7 @@ export const Subscription = styled.main`
         margin: auto;
 
         h1 {
-            color: #FF175B;
+            color: var(--pink);
         }
 
         .content {
@@ -35,7 +35,7 @@ export const Subscription = styled.main`
                 button {
                     width: 100%;
                     height: 42px;
-                    background-color: #FF175B;
+                    background-color: var(--pink);
                     border: none;
                     border-radius: 10px;
                     color: #FFF;

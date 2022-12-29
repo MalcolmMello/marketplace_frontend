@@ -13,7 +13,7 @@ export const Container = styled.section`
         margin-right: 20px;
 
         input, select {
-            border: 1px solid #949494;
+            border: 1px solid var(--gray);
             height: 40px;
             border-radius: 10px;
             resize: none;

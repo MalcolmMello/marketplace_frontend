@@ -13,8 +13,6 @@ export const ViewHistoricRequests = () => {
 
         return createdDate >= params.date1 && createdDate <= params.date2 && request.request_id.includes(params.code.toLowerCase()) && request.status.status_name.includes(params.status);
     });
-
-    useEffect(() => {console.log(filteredRequests)}, [params])
     
     return (
         <C.Container>

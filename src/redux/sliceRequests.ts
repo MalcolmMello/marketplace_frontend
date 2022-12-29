@@ -128,6 +128,9 @@ const sliceRequests = createSlice({
             })
             .addCase(getRequests.rejected, (state, action: PayloadAction<any>) => {
                 state.error = action.payload.message;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.loading = false;
             })
             .addCase(changeRequestStatus.pending, (state, action) => {
@@ -144,6 +147,9 @@ const sliceRequests = createSlice({
             })
             .addCase(changeRequestStatus.rejected, (state, action: PayloadAction<any>) => {
                 state.error = action.payload.message;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
                 state.loading = false;
             })
     }   

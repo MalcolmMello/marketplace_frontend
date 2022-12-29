@@ -138,8 +138,7 @@ export const Address = () => {
                 <img src="https://img.icons8.com/ios-filled/50/FA5252/marker.png"/>
                 <div>
                     <h3>{perfil.company_name}</h3>
-                    <div>{address.street}, {address.number}</div>
-                    <div>{address.district}, {address.city}, {address.state}, {address.zip_code}</div>
+                    <div>{address.display_name}, {address.number}</div>
                 </div>
             </section>
         </C.Address>

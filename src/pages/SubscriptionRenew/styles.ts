@@ -18,7 +18,7 @@ export const SubscriptionRenew = styled.main`
 
             h1 {
                 margin-top: 50px;
-                color: #FF175B
+                color: var(--pink)
             }
         }
 
@@ -27,7 +27,7 @@ export const SubscriptionRenew = styled.main`
             height: 50%;
             
             h2, h3 {
-                color: #FF175B;
+                color: var(--pink);
             }
 
             .bottom--area--first {
@@ -43,7 +43,7 @@ export const SubscriptionRenew = styled.main`
                     button {
                         width: 50%;
                         height: 42px;
-                        background-color: #FF175B;
+                        background-color: var(--pink);
                         border: none;
                         border-radius: 10px;
                         color: #FFF;

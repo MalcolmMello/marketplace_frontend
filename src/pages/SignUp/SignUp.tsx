@@ -1,5 +1,5 @@
 import * as C from './styles'
-import logo from '../../assets/logopink.svg'
+import logo from '../../assets/logopink.png'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
@@ -22,7 +22,7 @@ export const SignUp = () => {
     return (
         <C.SignUp percent={perCent}>
             <header>
-                <img src={logo} alt="Windpet Logo" />
+                <img src={logo} alt="Petland Logo" />
             </header>
             <div className='border'></div>
             <Outlet />

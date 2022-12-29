@@ -27,7 +27,7 @@ export const SubscriptionInfo = () => {
         <C.SubscriptionInfo>
             <div className='container'>
                 <section className='top--area'>
-                    <h1>Torne-se um parceiro Windpet</h1>
+                    <h1>Torne-se um parceiro Petland</h1>
                     <p className='text'>Ganhe acesso a uma plataforma de gestão de pedidos, estoques e gestão financeira por apenas R$ 100,00.</p>
                 </section>
                 <section className='bottom--area'>
@@ -38,7 +38,7 @@ export const SubscriptionInfo = () => {
                                 <h1>R$ 100</h1>
                                 <div className='text'>Por mês</div>
                             </div>
-                            <button onClick={handleCreateAccount}>'Concluir Pagamento'</button>
+                            <button onClick={handleCreateAccount}>Concluir Pagamento</button>
                         </div>
                     </div>
                     <div className='bottom--area--second'>

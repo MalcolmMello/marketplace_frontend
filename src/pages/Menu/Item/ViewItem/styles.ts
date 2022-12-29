@@ -15,11 +15,11 @@ export const ViewItem = styled.section`
         padding: 15px 15px;
         h1 {
             margin: 0;
-            color: #660C27;
+            color: var(--wine);
         };
         button {
             height: 47px;
-            background-color: #660C27;
+            background-color: var(--wine);
             border: none;
             border-radius: 12px;
             color: #FFF;
@@ -29,7 +29,7 @@ export const ViewItem = styled.section`
         }
     }
     .product--area {
-        color: #660C27;
+        color: var(--wine);
         font-weight: 500;
         padding: 0px 15px;
     };
@@ -129,7 +129,7 @@ export const ViewItem = styled.section`
         padding: 10px 15px;
         list-style: none;
         padding-bottom: 15px;
-        color: #660C27;
+        color: var(--wine);
         .status {
             color: #7BC022
         }
@@ -154,7 +154,7 @@ export const ViewItem = styled.section`
             flex-direction: column;
             align-items: start;
             span {
-                color: #949494
+                color: var(--gray)
             }
         }
     }

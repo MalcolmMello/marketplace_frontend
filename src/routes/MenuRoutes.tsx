@@ -27,6 +27,7 @@ import { HistoricRequests } from '../pages/HistoricRequests/HistoricRequests';
 import { ViewHistoricRequests } from '../pages/HistoricRequests/ViewHistoricRequests/ViewHistoricRequests';
 import RequireAuth from '../components/RequireAuth/RequireAuth';
 import { Unauthorized } from '../pages/Unauthorized/Unauthorized';
+import RequireSubscription from '../components/RequireSubscription/RequireSubscription';
 
 export const MenuRoutes = () => {
     return useRoutes([
@@ -67,10 +68,11 @@ export const MenuRoutes = () => {
                     { path: '', element: <ViewHistoricRequests /> }
                 ]},
             ]},
-            
-            { path: '/subscription-renew', element: <SubscriptionRenew /> },
         ]},
-        { path: 'subscription-data/:clientSecret', element: <Subscription /> },
-        { path: 'subscription-status', element: <SubscriptionStatus /> },
+        { path: '/subscription', element: <RequireSubscription />, children: [
+            { path: '-renew', element: <SubscriptionRenew /> },
+            { path: '-data/:clientSecret', element: <Subscription /> },
+            { path: '-status', element: <SubscriptionStatus /> },
+        ] }
     ]);
 };

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ViewCategory = styled.div`
     background-color: #FFF;
     border-radius: 15px;
-    color: #660C27;
+    color: var(--wine);
     font-weight: 500;
     .container {
         box-shadow: 0px 3px 40px rgb(227,227,227);
@@ -19,7 +19,7 @@ export const ViewCategory = styled.div`
         };
         button {
             height: 47px;
-            background-color: #660C27;
+            background-color: var(--wine);
             border: none;
             border-radius: 12px;
             color: #FFF;
@@ -60,7 +60,7 @@ export const ViewCategory = styled.div`
                     align-items: center;
                     justify-content: center;
                     text-decoration: none;
-                    color: #660C27;
+                    color: var(--wine);
 
                     font-weight: 500;
                     width: 100%;
