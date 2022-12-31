@@ -29,12 +29,10 @@ type AddressResponse = {
 };
 
 type AddressData = {
-    zip_code: string;
-    street: string;
-    district: string;
-    city: string;
-    state: string;
-    address_number: string;
+    display_name: string,
+    lat: string,
+    long: string,
+    number: string
     token: string,
     companyId: string
 };
@@ -110,7 +108,7 @@ export const editPerfil = createAsyncThunk('editcompanies/perfil', async ({formD
 
 export const editAddress = createAsyncThunk('editaddress/address', async (data: AddressData, thunkAPI) => {
     try {
-        const body = data;
+        const {token, ...body} = data;
         const response = await axios.put(baseURL+'/updateaddress', body, { headers: { 
             'Authorization' : `Bearer ${data.token}`,
         }});

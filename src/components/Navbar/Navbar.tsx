@@ -1,6 +1,6 @@
 import * as C from './styles';
 import axios from 'axios';
-import logo from '../../assets/assinatura_completa.svg';
+import logo from '../../assets/logowhite.png';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import logodefault from '../../assets/camera.png';

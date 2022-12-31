@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Perfil = styled.main`
-    width: 85vw;
+    width: 100%;
     padding: 10px 60px 0px 40px;
     background-color: rgb(244,244,244);
 

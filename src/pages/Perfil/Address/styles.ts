@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const Address = styled.main`
     display: flex;
     padding: 10px;
+    form {
+        width: 40%;
+        margin-right: 20px
+    }
     input {
         width: 50%;
         height: 40px;
@@ -14,32 +18,32 @@ export const Address = styled.main`
     }
     .input--area {
         display: flex;
-        flex-direction: column;
-        .short--input {
-            width: 22.5%
+        input {
+            width: 100%
+        }
+        .street--area {
+            width: 80%;
+            margin-right: 15px;
+        }
+        .number--area {
+            width: 20%
         }
     }
-    .input--area--doble {
-        display: flex;
-        .input--container {
-            display: flex;
-            flex-direction: column;
-            margin-right: 10px;
-            input {
-                width: 100%;
-            }
-        }
-    }
+    
     .address--area {
         display: flex;
+        width: 60%;
         height: min-content;
-        justify-content: center;
-        align-items: center;
         font-size: 14px;
+        .text {
+            margin-top: 0px
+        }
         img {
             height: 25px;
             width: 25px;
             margin-right: 10px;
+
+            margin-top: 5px
         }
         h3 {
             margin: 0;
@@ -57,5 +61,28 @@ export const Address = styled.main`
         font-size: 15px;
         cursor: pointer;
         margin-top: 20px;
+    }
+
+    .results {
+        cursor: pointer;
+        padding: 5px;
+        height: 300px;
+        overflow: auto;
+        .result {
+            margin-bottom: 11px;
+            .place {
+                font-size: 15px;
+                font-weight: 500;
+                transition: all ease 0.2s
+            }
+            .name {
+                font-size: 12px
+            }
+        }
+        .result:hover {
+            .place {
+                color: var(--pink)
+            }
+        }
     }
 `;

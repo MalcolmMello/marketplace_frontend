@@ -11,9 +11,9 @@ export const Navbar = styled.header`
         justify-content: center;
         align-items: center;
         img {
-            width: 70%;
-            height: 70%;
+            height: 320%;
             cursor: pointer;
+            object-fit: cover;
         };
     };
     .perfil--data {
@@ -81,7 +81,7 @@ export const Navbar = styled.header`
 
 export const Layout = styled.div`
     display: flex;
-    max-width: 100vw;
+    width: 100vw;
 
     button {
         width: 300px;

@@ -1,142 +1,119 @@
-import * as C from './styles'
+import * as C from './styles';
+import axios from 'axios';
+import useDebounce from './useDebounce';
 import { useEffect, useState } from 'react';
-import { apiAddress } from './FindAddress';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { editAddress } from '../../../redux/slicePerfil';
+import { setLogOut } from '../../../redux/responsibleSlice';
+
 
 type Address = {
-    cep: string,
-    logradouro: string,
-    complemento: string,
-    bairro: string,
-    localidade: string,
-    uf: string,
-    erro?: string
+    display_place?: string,
+    display_name: string,
+    lat: string,
+    lon: string
 };
+
+const delay = 500;
 
 export const Address = () => {
     const { token, current_company_id } = useAppSelector((state) => state.responsible); 
     const { address, perfil, loading, error } = useAppSelector((state) => state.perfil);  
-    
-    const [data, setData] = useState({ zip_code: '', street: '', district: '', city: '', state: '', address_number: '' });
-    const [disableCep, setDisableCep] = useState(false);
+
+    const [autocomplete, setAutocomplete] = useState("");
+    const [search, setSearch] = useState("");
+    const [number, setNumber] = useState("");
+
+    const [newAddress, setAddress] = useState<Address[]>([]);
+    const [currentAddress, setCurrentAddress] = useState<Address>();
 
     const dispatch = useAppDispatch();
 
-
     useEffect(() => {
-        if(data.zip_code.length == 8) {
-            findAddress(data.zip_code);
-        }
-    }, [data.zip_code]);
+        handleSearch();
+    }, [search]);
 
-    const findAddress = async (cep: string) => {
-        let address: Address = await apiAddress.foundAddressByZipCode(cep);
+    const handleSearch = async () => {
+        const { data } = await axios.get(`https://api.locationiq.com/v1/autocomplete?key=${process.env.REACT_APP_LOCATIONIQ_ACESS_TOKEN}&q=${autocomplete}&countrycodes=br&limit=5`);
+        setAddress(data);
+    };
 
-        setDisableCep(true);
+    const deboucedChange = useDebounce(setSearch, delay);
 
-        if(address.erro) {
-            setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
-            alert("Endereço não existe.");
-            setDisableCep(false);
-        } else {
-            setData({
-                ...data,
-                street: address.logradouro,
-                state: address.uf,
-                city: address.localidade,
-                district: address.bairro
-            })
-        }
+    const handleChange = (e: string) => {
+        deboucedChange(e);
+        setAutocomplete(e);
     };
 
     const handleChangeAddress = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        if(data.zip_code == '' || data.zip_code.length < 8) {
-            alert('Digite um endereço válido');
-            setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
-            setDisableCep(false);
-        } else {
-            try {
-                if(token && current_company_id) {
-                    const result = await dispatch(editAddress({...data, token, companyId: current_company_id})).unwrap();
-                    setData({zip_code: '', street: '', district: '', city: '', state: '', address_number: ''});
-                    setDisableCep(false);
-                }
-            } catch (error) {
-                alert(`${error}`);
-            };
+        try {
+            if(token && current_company_id && currentAddress && number.length > 0) {
+                const result = await dispatch(editAddress({display_name: currentAddress?.display_name, lat: currentAddress.lat, long: currentAddress.lon, number, token, companyId: current_company_id})).unwrap();
+                setAutocomplete("");
+                setNumber("");
+            } else if(!token && !current_company_id) {
+                setLogOut();
+            }
+        } catch (error) {
+            alert(`${error}`);
         };
+    };
+
+    const handleChangeAutocomplete = (e: Address) => {
+        setCurrentAddress({
+            display_name: e.display_name,
+            display_place: e.display_place,
+            lat: e.lat,
+            lon: e.lon
+        });
+        setAutocomplete(e.display_name);
+        setAddress([]);
     };
 
     return (
         <C.Address>
             <form onSubmit={handleChangeAddress}>
                 <div className='input--area'>
-                    <label>CEP</label>
-                    <input
-                        type="number"
-                        className='short--input'
-                        value={data.zip_code}
-                        onChange={e => setData({...data, zip_code: e.target.value})}
-                        disabled={disableCep}
-                    />
-                </div>
-                <div className='input--area'>
-                    <label>Logradouro</label>
-                    <input  
-                        type="text"
-                        value={data.street}
-                        onChange={e => setData({...data, street: e.target.value})}
-                        disabled={disableCep}
-                    />
-                </div>
-                <div className='input--area--doble'>
-                    <div className='input--container'>
-                        <label>Estado</label>
-                        <input
-                            type="text" 
-                            value={data.state}
-                            onChange={e => setData({...data, state: e.target.value})}   
-                            disabled={disableCep} 
-                        />
-                    </div>
-                    <div className='input--container'>
-                        <label>Cidade</label>
-                        <input
-                            type="text"
-                            value={data.city}
-                            onChange={e => setData({...data, city: e.target.value})}
-                            disabled={disableCep}
-                        />
-                    </div>
-                </div>
-                <div className='input--area--doble'>
-                    <div className='input--container'>
-                        <label>Bairro</label>
+                    <div className='street--area'>
+                        <label>Rua</label>
                         <input 
-                            type="text"
-                            value={data.district}
-                            onChange={e => setData({...data, district: e.target.value})}
-                            disabled={disableCep}
+                            type="text" 
+                            value={autocomplete}
+                            onChange={e => handleChange(e.target.value)}
+                        />
+                    </div>
+                    <div className='number--area'>
+                        <label>Número</label>
+                        <input 
+                            type="text" 
+                            value={number}
+                            onChange={e => setNumber(e.target.value)}
                         />
                     </div>
                 </div>
-                <div className='input--area'>
-                    <label>Número</label>
-                    <input
-                        type="text" 
-                        className='short--input' 
-                        value={data.address_number}
-                        onChange={e => setData({...data, address_number: e.target.value})}
-                    />
-                </div>
+                {newAddress.length > 0 &&
+                            <div className='results'>
+                                {
+                                    newAddress.map(item => (
+                                        <div className='result' onClick={() => handleChangeAutocomplete(item)}>
+                                            <div className='place'>
+                                                {item.display_place}
+                                            </div>
+                                            <div className='name'>
+                                                {item.display_name}
+                                            </div>
+                                            
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        }
                 <button type='submit'>Enviar</button>
             </form>
             <section className='address--area'>
                 <img src="https://img.icons8.com/ios-filled/50/FA5252/marker.png"/>
-                <div>
+                <div className='text'>
                     <h3>{perfil.company_name}</h3>
                     <div>{address.display_name}, {address.number}</div>
                 </div>
