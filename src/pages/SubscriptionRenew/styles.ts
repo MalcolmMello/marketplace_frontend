@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SubscriptionRenew = styled.main`
+    width: 100vw;
     height: 80%;
     .container {
         height: 100%;

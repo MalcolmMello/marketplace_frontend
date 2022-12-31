@@ -6,7 +6,7 @@ import { CompanyData } from '../pages/SignUp/CompanyData/CompanyData';
 import { AddressData } from '../pages/SignUp/AddressData/AddressData';
 import { SignIn } from '../pages/SignIn/SignIn';
 import { SubscriptionInfo } from '../pages/SignUp/SubscriptionInfo/SubscriptionInfo';
-import { Subscription } from '../pages/SignUp/SubscriptionData/Subscription';
+import { SubscriptionData } from '../pages/SignUp/SubscriptionData/Subscription';
 import { SubscriptionStatus } from '../pages/SignUp/SubscriptionStatus/SubscriptionStatus';
 import { SubscriptionRenew } from '../pages/SubscriptionRenew/SubscriptionRenew';
 import { Home } from '../pages/Home/Home';
@@ -28,6 +28,7 @@ import { ViewHistoricRequests } from '../pages/HistoricRequests/ViewHistoricRequ
 import RequireAuth from '../components/RequireAuth/RequireAuth';
 import { Unauthorized } from '../pages/Unauthorized/Unauthorized';
 import RequireSubscription from '../components/RequireSubscription/RequireSubscription';
+import { Subscription } from '../pages/Perfil/Subscription/Subscription';
 
 export const MenuRoutes = () => {
     return useRoutes([
@@ -62,7 +63,8 @@ export const MenuRoutes = () => {
                 ]},
                 { path: '/perfil', element: <Perfil />, children: [
                     { path: '', element: <Shop /> },
-                    { path: 'address', element: <Address /> }
+                    { path: 'address', element: <Address /> },
+                    { path: 'subscription', element: <Subscription /> }
                 ]},
                 { path: '/historico', element: <HistoricRequests />, children: [
                     { path: '', element: <ViewHistoricRequests /> }
@@ -70,9 +72,11 @@ export const MenuRoutes = () => {
             ]},
         ]},
         { path: '/subscription', element: <RequireSubscription />, children: [
-            { path: '-renew', element: <SubscriptionRenew /> },
-            { path: '-data/:clientSecret', element: <Subscription /> },
-            { path: '-status', element: <SubscriptionStatus /> },
-        ] }
+            { path: '', element: <SubscriptionRenew /> },
+            { path: 'data', element: <SubscriptionData /> },
+            
+        ]},
+        { path: '/subscription/status', element: <SubscriptionStatus /> },
+        
     ]);
 };

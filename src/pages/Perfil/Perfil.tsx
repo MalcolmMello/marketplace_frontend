@@ -27,6 +27,11 @@ export const Perfil = () => {
                             Endereço
                         </Link>
                     </li>
+                    <li className={`${pathname === '/perfil/subscription' ? 'active' : ''}`}>
+                        <Link to="subscription">
+                            Plano Mensal
+                        </Link>
+                    </li>
                 </ul>
                 <Outlet />
             </C.NestedMenu>

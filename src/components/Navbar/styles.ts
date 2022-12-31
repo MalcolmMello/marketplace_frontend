@@ -83,8 +83,24 @@ export const Layout = styled.div`
     display: flex;
     width: 100vw;
 
-    button {
-        width: 300px;
-        height: 50px
+    .incomplete {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+
+        button {
+            width: 300px;
+            height: 60px;
+            background-color: var(--wine);
+            border: none;
+            border-radius: 10px;
+            color: #FFF;
+            font-weight: 600;
+            font-size: 17px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     }
 `;

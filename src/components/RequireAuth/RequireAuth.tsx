@@ -17,7 +17,7 @@ const RequireAuth = () => {
                 return setLogOut();
             }
 
-            navigate(`/subscription-data/${data.clientSecret}`);
+            navigate(`/subscription/data/${data.clientSecret}`);
         } catch (error) {
             console.log(error);
         }
@@ -27,8 +27,8 @@ const RequireAuth = () => {
         state.subscription_status === "active" && state.token !== null
             ? <Outlet /> : state.token === null
             ? <Navigate to="/signin"/> : state.subscription_status === "past_due" || state.subscription_status === "incomplete"
-            ? <>{retrieveSubscription()}</> : state.subscription_status !== undefined
-            ? <Navigate to="/subscription-renew" replace /> : <></>
+            ? <Navigate to="/subscription/data"/> : state.subscription_status !== undefined
+            ? <Navigate to="/subscription" replace /> : <Navigate to="/signin"/>
             
     );
 };

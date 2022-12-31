@@ -13,13 +13,11 @@ export const SubscriptionInfo = () => {
     const handleCreateAccount = async () => {
         const body = {...form.address_data, ...form.company_data, ...form.responsible_data}
 
-
         try {
             const result = await dispatch(signupResponsible(body)).unwrap();
-            console.log(result);
-            navigate(`/subscription-data/${result.clientSecret}`);
+            navigate(`/subscription/data/${result.clientSecret}`);
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
     };
 

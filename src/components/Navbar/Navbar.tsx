@@ -4,25 +4,34 @@ import logo from '../../assets/logowhite.png';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import logodefault from '../../assets/camera.png';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCategories } from '../../redux/sliceCategories';
 import { getAddress, getPerfilData } from '../../redux/slicePerfil';
 
 export const Navbar = () => {
-    const { perfil, address, loading, error } = useAppSelector((state) => state.perfil);  
-    const { token, current_company_id } = useAppSelector((state) => state.responsible);  
+    const { perfil, address, error } = useAppSelector((state) => state.perfil);  
+    const { token, current_company_id } = useAppSelector((state) => state.responsible); 
+    
+    const [loading, setLoading] = useState(false);
+    
     const location = useLocation();
     const { pathname } = location;  
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if(token && current_company_id) {
-            dispatch(getPerfilData({token, companyId: current_company_id}));
-            dispatch(fetchCategories({token, companyId: current_company_id}));
-            dispatch(getAddress({token, companyId: current_company_id}));
+            setLoading(true);
+            getAllData(token, current_company_id);
         }
         
     }, [dispatch, token, current_company_id]);
+
+    const getAllData = async (token: string, current_company_id: string) => {
+        await dispatch(getPerfilData({token, companyId: current_company_id})).unwrap();
+        await dispatch(fetchCategories({token, companyId: current_company_id})).unwrap();
+        await dispatch(getAddress({token, companyId: current_company_id})).unwrap();
+        setLoading(false);
+    }
 
     const handleCreateStripeExpress = async () => {
         try {
@@ -68,13 +77,13 @@ export const Navbar = () => {
                     </ul>
                 </nav>
             </C.Navbar>
-            { perfil.onboarding ? 
+            {loading ? <>Carregando...</> : perfil.onboarding !== undefined && perfil.onboarding ? 
                 <Outlet /> : 
-                    <>
-                        Essa empresa ainda não pode receber pagamentos.
+                    <div className='incomplete'>
+                        <h1>Essa empresa ainda não pode receber pagamentos.</h1>
                         <button onClick={handleCreateStripeExpress}>Clique aqui para concluir o processo.</button>
-                    </> 
-                }
+                    </div> 
+            }
             
         </C.Layout>
     );

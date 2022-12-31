@@ -25,7 +25,7 @@ export const SubscriptionRenew = () => {
 
           dispatch(setSubscriptionStatus(data.subscription_status));
 
-          navigate(`/subscription-data/${data.clientSecret}`); 
+          navigate(`/subscription/data`); 
         } catch (error) {
           console.log(error);
         }

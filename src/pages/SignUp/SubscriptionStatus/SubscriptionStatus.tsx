@@ -7,7 +7,6 @@ import { setSubscriptionStatus } from '../../../redux/responsibleSlice';
 
 export const SubscriptionStatus = () => {
     const stripe = useStripe();
-    const elements = useElements();
     const dispatch = useAppDispatch();
 
     const [message, setMessage] = useState<string | null>(null);
@@ -37,7 +36,6 @@ export const SubscriptionStatus = () => {
             switch (paymentIntent.status) {
                 case "succeeded":
                     setMessage("Payment succeeded!");
-                    dispatch(setSubscriptionStatus("active"));
                     setLink('/');
                 break;
                 case "processing":

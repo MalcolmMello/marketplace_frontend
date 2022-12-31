@@ -4,8 +4,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { CheckoutForm } from './Checkout/CheckoutForm';
+import { setLogOut } from '../../../redux/responsibleSlice';
+import axios from 'axios';
+import { useAppSelector } from '../../../hooks';
 
-export const Subscription = () => {
+export const SubscriptionData = () => {
+    const state = useAppSelector((state) => state.responsible);
+    
     const [stripePromise, setStripePromise] = useState<any>(null);
     const [clientSecret, setClientSecret] = useState<string | undefined>("");
 
@@ -13,9 +18,24 @@ export const Subscription = () => {
 
     useEffect(() => {
         setStripePromise(loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string));
-        let { clientSecret  } = params;
-        setClientSecret(clientSecret);
-    }, [])
+        const secret = retrieveSubscription();
+    }, []);
+
+    const retrieveSubscription = async () => {
+        try {
+            const { data, status } = await axios.get('http://localhost:5000/companies/subscription-status', {headers: { 
+                'Authorization' : `Bearer ${state.token}`,
+            }});
+
+            if(status === 403 || status === 401) {
+                return setLogOut();
+            }
+
+            setClientSecret(data.clientSecret);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     
     return (
         <C.Subscription>

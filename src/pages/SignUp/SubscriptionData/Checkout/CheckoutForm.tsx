@@ -15,12 +15,12 @@ export const CheckoutForm = () => {
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: 'http://localhost:3000/subscription-status',
+                return_url: 'http://localhost:3000/subscription/status',
             }
         });
 
         if(error.message) {
-            console.log(error.message);
+            alert(error.message);
         };
     };
 
