@@ -9,10 +9,17 @@ export const ViewHistoricRequests = () => {
 
     const filteredRequests = requests.filter((request) => {
         let created_at = new Date(request.created_at);
-        let createdDate = `${created_at.getFullYear()}-${created_at.getMonth()+1}-${created_at.getDate()}`;
+        let createdDate = `${created_at.getFullYear()}-${created_at.getMonth()+1 < 10 ? `0${created_at.getMonth()+1}` : created_at.getMonth()+1}-${created_at.getDate()}`;
 
-        return createdDate >= params.date1 && createdDate <= params.date2 && request.request_id.includes(params.code.toLowerCase()) && request.status.status_name.includes(params.status);
+        const [year1, month1, day1] = params.date1.split('-');
+        const [year2, month2, day2] = params.date2.split('-');
+
+        console.log(created_at, new Date(Number(year1), Number(month1) -1 , Number(day1)));
+        
+        return created_at >= new Date(Number(year1), Number(month1) -1 , Number(day1), 0, 0) && created_at <= new Date(Number(year2), Number(month2) - 1, Number(day2), 23, 59) && request.request_id.includes(params.code.toLowerCase()) && request.status.status_name.includes(params.status);
     });
+
+    useEffect(() => {console.log(filteredRequests)}, [filteredRequests])
     
     return (
         <C.Container>

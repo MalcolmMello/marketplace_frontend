@@ -71,9 +71,7 @@ export const getRequests = createAsyncThunk('getrequest/companies', async ({toke
             'Authorization' : `Bearer ${token}`,
         }});
         
-        if(response.status === 403) {
-            setLogOut();
-        } else if(response.status !== 200) {
+        if(response.status !== 200) {
             return new Error();
         } else {
             let { data } = response;
@@ -95,9 +93,7 @@ export const changeRequestStatus = createAsyncThunk('changestatus/companies',asy
             'Authorization' : `Bearer ${token}`,
         }});
         
-        if(response.status === 403) {
-            setLogOut();
-        } else if(response.status !== 200) {
+        if(response.status !== 200) {
             return new Error();
         } else {
             let { data } = response;

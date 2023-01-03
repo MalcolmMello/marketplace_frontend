@@ -18,7 +18,7 @@ type Response = {
     phone_number: string,
     cnpj: string,
     subscription_status: string,
-    onboarding: boolean,
+    onboarding: boolean | undefined,
     logo: string,
     cover: string,
 }

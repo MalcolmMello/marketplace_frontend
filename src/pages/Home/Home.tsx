@@ -1,6 +1,38 @@
 import * as C from './styles';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useAppSelector } from '../../hooks';
+
+interface Finances {
+    today_requests: number,
+    today_average: number,
+    today_sales: number,
+    last_week_requests: number,
+    last_week_average: number,
+    last_week_sales: number,
+    week_clients: number
+}
+
+const baseURL = 'http://localhost:5000';
 
 export const Home = () => {
+    const { token, current_company_id, loading, error } = useAppSelector((state) => state.responsible);
+    
+    const [finances, setFinances] = useState<Finances>();
+
+    useEffect(() => {
+        getFinances();
+    }, []);
+
+    const getFinances = async () => {
+        const { data } = await axios.get(`${baseURL}/companies/${current_company_id}/today-finances`, { headers: { 
+            'Authorization' : `Bearer ${token}`,
+        }});
+
+        setFinances(data);
+    };
+
+
     return (
         <C.Home>
             <C.Header>
@@ -12,15 +44,15 @@ export const Home = () => {
                 <div className='data--area'>
                     <div className='data--item'>
                         <small>Pedidos de Hoje</small>
-                        <span><h2>0</h2> <small>pedidos</small></span>
+                        <span><h2>{finances?.today_requests}</h2> <small>pedidos</small></span>
                     </div>
                     <div className='data--item'>
                         <small>Ticket Médio de Hoje</small>
-                        <span><h2>R$ 0,00</h2></span>
+                        <span><h2>R$ {finances?.today_average}</h2></span>
                     </div>
                     <div className='data--item'>
                         <small>Vendas de Hoje</small>
-                        <span><h2>0</h2> <small>vendas</small></span>
+                        <span><h2>{finances?.today_sales}</h2> <small>vendas</small></span>
                     </div>
                     <div className='data--item'>
                         <small>Avaliação</small>
@@ -37,7 +69,7 @@ export const Home = () => {
                             <small>Últimos 7 dias</small>
                         </div>
                         <span>
-                            <h2>0</h2>
+                            <h2>{finances?.last_week_sales}</h2>
                         </span>
                     </div>
                     <div className='perf--item'>
@@ -46,7 +78,7 @@ export const Home = () => {
                             <small>Últimos 7 dias</small>
                         </div>
                         <span>
-                            <h2>0</h2>
+                            <h2>{finances?.last_week_requests}</h2>
                         </span>
                     </div>
                     <div className='perf--item'>
@@ -55,7 +87,7 @@ export const Home = () => {
                             <small>Últimos 7 dias</small>
                         </div>
                         <span>
-                            <h2>R$ 0,00</h2>
+                            <h2>R$ {finances?.last_week_average}</h2>
                         </span>
                     </div>
                     <div className='perf--item'>
@@ -64,7 +96,7 @@ export const Home = () => {
                             <small>Últimos 7 dias</small>
                         </div>
                         <span>
-                            <h2>0</h2>
+                            <h2>{finances?.week_clients}</h2>
                         </span>
                     </div>
                 </div>
