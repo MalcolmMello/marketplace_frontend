@@ -33,7 +33,6 @@ type Companies = {
 
 interface LoginAccount {
     token: string | null,
-    subscription_status: "incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null | undefined;
     responsible_companies: Companies[],
     current_company_id: string | null,
     responsible_name: string | null,
@@ -41,7 +40,8 @@ interface LoginAccount {
         id: string | null,
         brand: string | null,
         payment_method: string | null,
-        period_start: string | null
+        period_start: string | null,
+        status: "incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null | undefined,
     }
     loading: boolean,
     error: string | null
@@ -56,7 +56,8 @@ interface Response {
         id: string,
         brand: string,
         payment_method: string,
-        period_start: string
+        period_start: string,
+        status: "incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null;
     }
     clientSecret?: string
 }
@@ -76,7 +77,8 @@ const initialState = {
         id: null,
         brand: null,
         payment_method: null,
-        period_start: null
+        period_start: null,
+        status: undefined
     },
     loading: false,
     error: null
@@ -157,7 +159,7 @@ const responsibleSlice = createSlice({
             state.token = action.payload;
         },
         setSubscriptionStatus: (state, action: PayloadAction<"incomplete" | "incomplete_expired" | "active" | "past_due" | "canceled" | "unpaid" | null>) => {
-            state.subscription_status = action.payload;
+            state.subscription_data.status = action.payload;
         },
         setResponsibleCompanies: (state, action: PayloadAction<Companies[]>) => {
             state.responsible_companies = action.payload;
@@ -176,7 +178,6 @@ const responsibleSlice = createSlice({
             .addCase(signinResponsible.fulfilled, (state, action: PayloadAction<Response>) => {
                 state.error = null;
                 state.token = action.payload.token;
-                state.subscription_status = action.payload.subscription_status;
                 state.responsible_companies = action.payload.responsible_companies;
                 action.payload.responsible_companies.forEach((item) => {
                     if(item.isMainCompany) { state.current_company_id = item.id }
@@ -195,7 +196,7 @@ const responsibleSlice = createSlice({
             .addCase(signupResponsible.fulfilled, (state, action: PayloadAction<Response>) => {
                 state.error = null;
                 state.token = action.payload.token;
-                state.subscription_status = action.payload.subscription_status;
+                state.subscription_data.status = action.payload.subscription_status;
                 state.responsible_companies = action.payload.responsible_companies;
                 action.payload.responsible_companies.forEach((item) => {
                     if(item.isMainCompany) { state.current_company_id = item.id }
@@ -213,7 +214,6 @@ const responsibleSlice = createSlice({
             })
             .addCase(getResponsible.fulfilled, (state, action: PayloadAction<Response>) => {
                 state.error = null;
-                state.subscription_status = action.payload.subscription_status;
                 state.responsible_companies = action.payload.responsible_companies;
                 state.responsible_name = action.payload.responsible_name;
                 state.subscription_data = action.payload.subscription_data;
@@ -236,7 +236,7 @@ const responsibleSlice = createSlice({
             })
             .addCase(cancelSubscription.fulfilled, (state, action: PayloadAction<ResponseCancelSubscription>) => {
                 state.error = null;
-                state.subscription_status = action.payload.status;
+                state.subscription_data.status = action.payload.status;
                 state.loading = false;  
             })
             .addCase(cancelSubscription.rejected, (state, action: PayloadAction<any>) => {

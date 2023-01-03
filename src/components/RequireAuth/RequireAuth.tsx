@@ -24,10 +24,10 @@ const RequireAuth = () => {
     };
 
     return (
-        state.subscription_status === "active" && state.token !== null
+        state.subscription_data.status === "active" && state.token !== null
             ? <Outlet /> : state.token === null
-            ? <Navigate to="/signin"/> : state.subscription_status === "past_due" || state.subscription_status === "incomplete"
-            ? <Navigate to="/subscription/data"/> : state.subscription_status !== undefined
+            ? <Navigate to="/signin"/> : state.subscription_data.status === "past_due" || state.subscription_data.status === "incomplete"
+            ? <Navigate to="/subscription/data"/> : state.subscription_data.status !== undefined
             ? <Navigate to="/subscription" replace /> : <Navigate to="/signin"/>
             
     );

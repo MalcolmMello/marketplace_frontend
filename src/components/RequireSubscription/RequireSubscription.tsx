@@ -6,7 +6,7 @@ const RequireSubscription = () => {
 
     return (
         state.token === null 
-        ? <Navigate to="/signin" /> : state.subscription_status === "active" 
+        ? <Navigate to="/signin" /> : state.subscription_data.status === "active" 
         ? <Navigate to="/" /> : <Outlet />
     );
 };

@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z, string } from 'zod';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { signinResponsible } from '../../redux/responsibleSlice';
+import { getResponsible, signinResponsible } from '../../redux/responsibleSlice';
 
 const baseURL = 'http://localhost:5000';
 
@@ -25,12 +25,6 @@ export const SignIn = () => {
     const [authError, setAuthError] = useState(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if(state.token !== null) {
-            navigate('/')
-        }
-    }, []);
     
     const { register, handleSubmit, formState: {errors} } = useForm<IFormInputs>({
         resolver: zodResolver(schema)
@@ -39,11 +33,16 @@ export const SignIn = () => {
     const onSubmit = async (login: IFormInputs) => {
         try {
             const result = await dispatch(signinResponsible({ email: login.email, password: login.password })).unwrap();
+            dispatch(getResponsible(result.token));
             navigate('/');
         } catch (error) {
             setAuthError(true);
         }
     };
+
+    if(state.token !== null) {
+        return <Navigate to="/" />
+    }
 
     return (
         <C.SignIn>

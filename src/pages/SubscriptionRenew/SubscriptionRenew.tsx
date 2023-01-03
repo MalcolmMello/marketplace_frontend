@@ -23,8 +23,6 @@ export const SubscriptionRenew = () => {
             'Authorization' : `Bearer ${state.token}`,
           }});
 
-          dispatch(setSubscriptionStatus(data.subscription_status));
-
           navigate(`/subscription/data`); 
         } catch (error) {
           console.log(error);

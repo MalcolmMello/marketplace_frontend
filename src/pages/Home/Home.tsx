@@ -17,6 +17,7 @@ const baseURL = 'http://localhost:5000';
 
 export const Home = () => {
     const { token, current_company_id, loading, error } = useAppSelector((state) => state.responsible);
+    const { perfil } = useAppSelector((state) => state.perfil);
     
     const [finances, setFinances] = useState<Finances>();
 
@@ -36,7 +37,7 @@ export const Home = () => {
     return (
         <C.Home>
             <C.Header>
-                Olá Petshop do Nau, <br/>
+                Olá {`${perfil.company_name}`}, <br/>
                 <span>Bem vindo ao Portal do Parceiro!</span>
             </C.Header>
             <C.AnalyticsOverview>
