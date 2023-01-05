@@ -28,12 +28,7 @@ type Request = {
     }[],
     address: {
         id: string,
-        state: string,
-        city: string,
-        district: string,
-        street: string,
-        zip_code: string,
-        number: string
+        display_name: string
     }
 }
 

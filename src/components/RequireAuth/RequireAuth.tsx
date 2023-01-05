@@ -28,7 +28,7 @@ const RequireAuth = () => {
             ? <Outlet /> : state.token === null
             ? <Navigate to="/signin"/> : state.subscription_data.status === "past_due" || state.subscription_data.status === "incomplete"
             ? <Navigate to="/subscription/data"/> : state.subscription_data.status !== undefined
-            ? <Navigate to="/subscription" replace /> : <Navigate to="/signin"/>
+            ? <Navigate to="/subscription" replace /> : <></>
             
     );
 };

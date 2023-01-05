@@ -16,7 +16,6 @@ export const RequestItem = styled.div`
     .address {
         display: flex;
         align-items: center;
-        height: 60px;
         background-color: #FFF;
         box-shadow: 0px 0px 30px rgb(227,227,227);
         padding: 10px;

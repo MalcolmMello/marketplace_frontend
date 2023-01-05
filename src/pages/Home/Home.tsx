@@ -49,7 +49,7 @@ export const Home = () => {
                     </div>
                     <div className='data--item'>
                         <small>Ticket Médio de Hoje</small>
-                        <span><h2>R$ {finances?.today_average}</h2></span>
+                        <span><h2>R$ {finances?.today_average === null ? 0 : finances?.today_average}</h2></span>
                     </div>
                     <div className='data--item'>
                         <small>Vendas de Hoje</small>

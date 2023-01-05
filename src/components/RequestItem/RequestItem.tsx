@@ -12,12 +12,7 @@ interface RequestItem {
     isDelivery: boolean,
     address: {
         id: string,
-        state: string,
-        city: string,
-        district: string,
-        street: string,
-        zip_code: string,
-        number: string
+        display_name: string
     },
     products: {
         id: string,
@@ -82,7 +77,7 @@ export const RequestItem = ({ id, username, status, total, created_at, address, 
                 <div className='top--area1'>{status !== EM_ABERTO ? username : null} Pedido #{id.substring(0,8)} - Feito {date}</div> <div className='top--area2'>{isDelivery ? 'Entrega Própria' : 'Retirada do Cliente'}</div>
             </div>
             <div className='address'>
-               {address.street}, {address.number}, {address.city} - {address.district} - {address.state} - CEP {address.zip_code}
+               {address.display_name}
             </div>
             <div className='request--data'>
                 <div className='status'><h4>{status}</h4></div>
