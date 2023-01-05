@@ -17,6 +17,8 @@ type Response = {
     description: string,
     phone_number: string,
     cnpj: string,
+    lat: number,
+    long: number,
     subscription_status: string,
     onboarding: boolean | undefined,
     logo: string,

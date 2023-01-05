@@ -29,6 +29,7 @@ import RequireAuth from '../components/RequireAuth/RequireAuth';
 import { Unauthorized } from '../pages/Unauthorized/Unauthorized';
 import RequireSubscription from '../components/RequireSubscription/RequireSubscription';
 import { Subscription } from '../pages/Perfil/Subscription/Subscription';
+import { DeliverySettings } from '../pages/DeliverySettings/DeliverySettings';
 
 export const MenuRoutes = () => {
     return useRoutes([
@@ -69,6 +70,7 @@ export const MenuRoutes = () => {
                 { path: '/historico', element: <HistoricRequests />, children: [
                     { path: '', element: <ViewHistoricRequests /> }
                 ]},
+                { path: '/entrega-config', element: <DeliverySettings /> }
             ]},
         ]},
         { path: '/subscription', element: <RequireSubscription />, children: [

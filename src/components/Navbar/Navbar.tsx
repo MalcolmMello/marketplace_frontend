@@ -71,6 +71,9 @@ export const Navbar = () => {
                         <li className={`${pathname.includes('/historico') ? 'active' : ''}`}>
                             <Link to="historico">Pedidos</Link>
                         </li>
+                        <li className={`${pathname.includes('/entrega-config') ? 'active' : ''}`}>
+                            <Link to="entrega-config">Áreas de Entrega</Link>
+                        </li>
                         <li className={`${pathname.includes('/perfil') ? 'active' : ''}`}>
                             <Link to="perfil">Perfil</Link>
                         </li>
