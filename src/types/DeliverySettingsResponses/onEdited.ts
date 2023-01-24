@@ -6,7 +6,7 @@ export interface onEdited {
                 latlngs: {
                     lat: number,
                     lng: number
-                }[][]
+                }[][][]
             }
         }[]
     }

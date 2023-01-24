@@ -7,7 +7,8 @@ const baseURL = 'http://localhost:5000/companies';
 type Credentials = {
     token: string,
     companyId: string,
-    formData?: FormData
+    formData?: FormData,
+    radius?: number
 };
 
 type Response = {
@@ -23,6 +24,7 @@ type Response = {
     onboarding: boolean | undefined,
     logo: string,
     cover: string,
+    operatingRadius?: number
 }
 
 type AddressResponse = {
@@ -127,6 +129,29 @@ export const editAddress = createAsyncThunk('editaddress/address', async (data: 
     }
 });
 
+export const editOperatingRadius = createAsyncThunk('editradius/perfil', async ({radius, token, companyId}: Credentials, thunkAPI) => {
+    try {
+        const body = {
+            radius,
+            companyId
+        };
+
+        const response = await axios.post(baseURL+'/edit-radius', body, { headers: { 
+            'Authorization' : `Bearer ${token}`,
+        }});
+        if(response.status === 403) {
+            setLogOut();
+        } else if(response.status !== 200) {
+            return new Error()
+        } else {
+            let newRadius = response.data;
+            return newRadius;
+        }
+    } catch (error: any) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
 const slicePerfil = createSlice({
     name: 'perfil',
     initialState: INITIAL_STATE,
@@ -193,6 +218,22 @@ const slicePerfil = createSlice({
                 state.address = action.payload;
             })
             .addCase(editAddress.rejected, (state, action: PayloadAction<any>) => {
+                state.loading = false;
+                if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
+                    localStorage.clear();
+                }
+                state.error = action.payload.message;
+            })
+            .addCase(editOperatingRadius.pending, (state, action) => {
+                state.error = null;
+                state.loading = true;
+            })
+            .addCase(editOperatingRadius.fulfilled, (state, action: PayloadAction<Response>) => {
+                state.error = null;
+                state.loading = false;
+                state.perfil.operatingRadius = action.payload.operatingRadius;
+            })
+            .addCase(editOperatingRadius.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 if(action.payload.message === "jwt expired" || action.payload.message === "Invalid Token") {
                     localStorage.clear();
